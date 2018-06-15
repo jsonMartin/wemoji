@@ -1,0 +1,84 @@
+{
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "globals": {
+        "$": false,
+        "document": false,
+        "alert": false,
+        "fetch": false,
+        "test": false,
+        "expect": false,
+        "window": false,
+        "CustomEvent": false,
+        "URL": false,
+        "navigator": false
+    },
+
+    // 0 = Off, 1 = Warn, 2 = Error
+    "rules": {
+        // Javascript/ES6
+        "no-console": 0, // Allow console logging for Node servers & debugging
+        "import/no-extraneous-dependencies": 1,
+        "import/prefer-default-export": 1,
+        "no-param-reassign": 0,
+        "max-len": 0,
+        "arrow-parens": 0,
+        "import/extensions": 0,
+        "camelcase": 1,
+        "indent": [1, 2, { "SwitchCase": 1 }],
+        "arrow-body-style": [1, "as-needed"],
+        "default-case" : 1,
+        "semi": 1,
+        "dot-notation": 1,
+        "space-infix-ops": 1,
+        "prefer-const": 1,
+        "prefer-template": 1,
+        "one-var": 1,
+        "no-multi-spaces": 1,
+        "quotes": 1,
+        "jsx-quotes": 1,
+        "no-else-return": 0,
+        "class-methods-use-this": 0,
+        "consistent-return": 0, // annoying with _.map that includes an if statement and no clear return by design
+        "eol-last": 1,
+        "func-names": 1,
+        "block-spacing": 1,
+        "no-unused-vars": 1,
+        "no-trailing-spaces": 1,
+        "comma-dangle": 1,
+        "object-shorthand": 1,
+        "object-curly-spacing": 1,
+        "no-multiple-empty-lines": 1,
+        "import/first": 1,
+        "no-use-before-define": 0, // Use before define required for GraphQL circular references
+        "no-confusing-arrow": 0, // Used for styled components
+        "no-debugger": 0, // Downgrade debugger statements to warnings for development purposes
+        "spaced-comment": 1, // Allow developer compiling with commented out code
+        "no-underscore-dangle": 0, // Required for Apollo
+        "no-unused-expressions": 0, // Required for styled-components injectGlobal statements
+        "no-restricted-syntax": 0, // Required to use "of" syntax
+        "no-nested-ternary": 0,
+
+        // React
+        "react/jsx-indent-props": [1, 2],
+        "react/jsx-indent": [1, 2],
+        "react/jsx-equals-spacing": 1,
+        "react/jsx-filename-extension": 0,
+        "react/jsx-space-before-closing": 1,
+        "react/jsx-tag-spacing": 1,
+        "react/prop-types": 0,
+        "react/no-array-index-key": 1,
+        "react/jsx-closing-bracket-location": 1,
+        "react/prefer-stateless-function": 1,
+        "react/no-danger": 0, // Allow for dangerouslySetInnerHTML for Server Side Rendering
+
+        // Accessability
+        "jsx-a11y/anchor-has-content": 0, // Disable requiring content for Anchor tags
+        "jsx-a11y/no-static-element-interactions": 0, // Allow for click handlers on any element
+        "jsx-a11y/img-has-alt": 0, // Disable requiring "Alt" for images
+
+        // Node
+        "global-require": 0, // Allow to conditionally import modules
+        "import/no-dynamic-require": 0
+    }
+}
