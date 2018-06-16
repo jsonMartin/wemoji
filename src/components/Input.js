@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 
+// TODO: Rename to camera
 class Input extends Component {
-  componentDidMount() {
-    const constraints = {
-      video: true,
-    };
+  async componentDidMount() {
+    navigator.getMedia = (navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia);
 
     const video = document.getElementById('video');
 
-    function handleSuccess(stream) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       video.srcObject = stream;
+    } catch (error) {
+      console.error(error);
     }
-
-    function handleError(error) {
-      console.error('Reeeejected!', error);
-    }
-
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then(handleSuccess).catch(handleError);
   }
 
   takePhoto() {
