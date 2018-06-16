@@ -30,10 +30,9 @@ class App extends Component {
         </Header>
         <Section>
           <Input />
-          The picture will go here
         </Section>
         <Footer>
-          The take image button goes here
+          <img id="photo" height="100%" alt="The screen capture will appear in this box." />
         </Footer>
       </div>
     );
