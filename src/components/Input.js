@@ -3,8 +3,15 @@ import styled from 'styled-components';
 // TODO: Rename to camera
 
 const Video = styled.video`
+  /* width: 100%;
+  min-height: 80vh;
+  object-fit: cover; */
+`;
+
+const Canvas = styled.canvas`
   width: 100%;
-  min-height: 100%;
+  min-height: 80vh;
+  object-fit: cover;
 `;
 
 class Input extends Component {
@@ -19,10 +26,11 @@ class Input extends Component {
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia);
 
-    const video = document.getElementById('video'); // TODO: Change to ref
-
+    const video = this.videoRef.current;
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: { exact: 448 }, height: { exact: 676 } },
+      });
       video.srcObject = stream;
     } catch (error) {
       console.error(error);
@@ -32,29 +40,31 @@ class Input extends Component {
   takePhoto() {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
+    // const video = this.videoRef.current;
     const video = document.getElementById('video');
     const photo = document.getElementById('photo');
     const { width, height } = video.getBoundingClientRect();
 
-    console.log('Width, height', width, height);
-    context.drawImage(video, 0, 0, 320, 240);
+    const { videoWidth, videoHeight } = video;
+    console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
+    [canvas.width, canvas.height] = [videoWidth, videoHeight];
+
+    console.log('Width, height', videoWidth, videoHeight);
+    // debugger;
+    context.drawImage(video, 0, 0);
     const data = canvas.toDataURL('image/png');
     // console.log(data);
     photo.setAttribute('src', data);
   }
   render() {
-    const videoStyle = {
-      width: '100%',
-      'min-height': '100%',
-    };
     return (
       <div>
         <div className="camera">
-          {/* <video id="video" width="640" height="480" autoPlay>Video stream not available.</video> */}
-          <Video ref={this.videoRef} id="video" autoPlay>Video stream not available.</Video>
+          <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
           <button id="startbutton" onClick={this.takePhoto}>Take photo</button>
         </div>
-        <canvas id="canvas" style={{ display: 'none' }} />
+        {/* <canvas id="canvas" style={{ display: 'none' }} /> */}
+        <Canvas id="canvas" />
       </div>
     );
   }

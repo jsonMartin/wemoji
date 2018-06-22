@@ -14,7 +14,7 @@ const Section = styled.section`
 `;
 
 const Footer = styled.section`
-  height: 15vh;
+  /* height: 15vh; */
   background-color: blue;
 `;
 
