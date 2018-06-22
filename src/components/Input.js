@@ -21,15 +21,25 @@ class Input extends Component {
   }
 
   async componentDidMount() {
+    window.addEventListener('resize', () => this.loadMediaStream());
+    this.loadMediaStream();
+  }
+
+  async loadMediaStream() {
     navigator.getMedia = (navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia);
 
     const video = this.videoRef.current;
+    const camera = document.getElementsByClassName('camera')[0];
+    const { clientWidth, clientHeight } = camera;
+    console.log('Client width, client height:', clientWidth, clientHeight);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { exact: 448 }, height: { exact: 676 } },
+        // video: { height: { exact: 720 } },
+        video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+        audio: false,
       });
       video.srcObject = stream;
     } catch (error) {
@@ -58,14 +68,14 @@ class Input extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="camera">
-          <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
-          <button id="startbutton" onClick={this.takePhoto}>Take photo</button>
-        </div>
-        {/* <canvas id="canvas" style={{ display: 'none' }} /> */}
-        <Canvas id="canvas" />
+
+      <div className="camera" style={{ width: '100%', height: '100%' }}>
+        <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
+        <button id="startbutton" onClick={this.takePhoto}>Take photo</button>
+        {/* <Canvas id="canvas" /> */}
+        <canvas id="canvas" style={{ display: 'none' }} />
       </div>
+
     );
   }
 }
