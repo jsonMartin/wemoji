@@ -8,13 +8,26 @@ const Video = styled.video`
   object-fit: cover; */
 `;
 
+const CameraWrapper = styled.div`
+  /* height: 80vh; */
+  /* max-height: 720px; */
+  height: 100%;
+  width: 100%;
+  /* background-color: green; */
+`;
+
 const Canvas = styled.canvas`
   width: 100%;
   min-height: 80vh;
   object-fit: cover;
 `;
 
-class Input extends Component {
+const CameraButton = styled.button`
+  position: absolute;
+  left: 50%;
+  bottom: 210px;
+`;
+class Camera extends Component {
   constructor() {
     super();
     this.videoRef = React.createRef();
@@ -69,15 +82,15 @@ class Input extends Component {
   render() {
     return (
 
-      <div className="camera" style={{ width: '100%', height: '100%' }}>
+      <CameraWrapper className="camera">
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
-        <button id="startbutton" onClick={this.takePhoto}>Take photo</button>
+        <CameraButton id="startbutton" onClick={this.takePhoto}>Take photo</CameraButton>
         {/* <Canvas id="canvas" /> */}
         <canvas id="canvas" style={{ display: 'none' }} />
-      </div>
+      </CameraWrapper>
 
     );
   }
 }
 
-export default Input;
+export default Camera;

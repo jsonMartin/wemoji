@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import Input from './components/Input.js';
+import Camera from './components/Input.js';
 
 const Header = styled.header`
   height: 5vh;
@@ -10,6 +10,7 @@ const Header = styled.header`
 
 const Section = styled.section`
   height: 80vh;
+  max-height: 720px;
   background-color: green;
 `;
 
@@ -32,9 +33,11 @@ class App extends Component {
         <Header>
           I'm the header
         </Header>
+
         <Section>
-          <Input />
+          <Camera />
         </Section>
+
         <Footer>
           <img id="photo" height="100%" alt="The screen capture will appear in this box." />
         </Footer>
