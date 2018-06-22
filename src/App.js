@@ -17,6 +17,10 @@ const Footer = styled.section`
   height: 15vh;
   background-color: blue;
 `;
+
+const Wrapper = styled.div`
+
+`;
 class App extends Component {
   constructor() {
     super();
@@ -24,7 +28,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
+      <Wrapper className="App">
         <Header>
           I'm the header
         </Header>
@@ -34,7 +38,7 @@ class App extends Component {
         <Footer>
           <img id="photo" height="100%" alt="The screen capture will appear in this box." />
         </Footer>
-      </div>
+      </Wrapper>
     );
   }
 }

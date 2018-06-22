@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
-
+import styled from 'styled-components';
 // TODO: Rename to camera
+
+const Video = styled.video`
+  width: 100%;
+  min-height: 100%;
+`;
+
 class Input extends Component {
+  constructor() {
+    super();
+    this.videoRef = React.createRef();
+  }
+
   async componentDidMount() {
     navigator.getMedia = (navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia);
 
-    const video = document.getElementById('video');
+    const video = document.getElementById('video'); // TODO: Change to ref
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -32,11 +43,15 @@ class Input extends Component {
     photo.setAttribute('src', data);
   }
   render() {
+    const videoStyle = {
+      width: '100%',
+      'min-height': '100%',
+    };
     return (
       <div>
         <div className="camera">
           {/* <video id="video" width="640" height="480" autoPlay>Video stream not available.</video> */}
-          <video id="video" width="100%" height="100%" autoPlay>Video stream not available.</video>
+          <Video ref={this.videoRef} id="video" autoPlay>Video stream not available.</Video>
           <button id="startbutton" onClick={this.takePhoto}>Take photo</button>
         </div>
         <canvas id="canvas" style={{ display: 'none' }} />

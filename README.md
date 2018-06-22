@@ -3,6 +3,12 @@ Test URL: https://wizardly-snyder-db8480.netlify.com/
 
 
 TODOs
+- Fix on Phone
+- Set maxwidth of desktop app
+- Allow user to download photo
+// Set the href attribute of the download button.
+    document.querySelector('#dl-btn').href = imageDataURL;
+
 - Make tapping on photo take the image
 - Make video camera fill up entire height of div, or center if not possible
 - Clean up code
