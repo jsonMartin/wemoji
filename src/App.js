@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import Camera from './components/Input.js';
 
@@ -31,7 +34,13 @@ class App extends Component {
     return (
       <Wrapper className="App">
         <Header>
-          I'm the header
+          <AppBar position="static" color="secondary">
+            <Toolbar>
+              <Typography variant="title" color="primary" style={{ 'text-align': 'center' }}>
+                WEMoJI
+              </Typography>
+            </Toolbar>
+          </AppBar>
         </Header>
 
         <Section>

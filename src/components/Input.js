@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// TODO: Rename to camera
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
 
 const Video = styled.video`
   /* width: 100%;
@@ -14,6 +16,11 @@ const CameraWrapper = styled.div`
   height: 100%;
   width: 100%;
   /* background-color: green; */
+  button {
+    position: absolute;
+    left: 50%;
+    bottom: 210px;
+  }
 `;
 
 const Canvas = styled.canvas`
@@ -22,11 +29,6 @@ const Canvas = styled.canvas`
   object-fit: cover;
 `;
 
-const CameraButton = styled.button`
-  position: absolute;
-  left: 50%;
-  bottom: 210px;
-`;
 class Camera extends Component {
   constructor() {
     super();
@@ -84,7 +86,7 @@ class Camera extends Component {
 
       <CameraWrapper className="camera">
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
-        <CameraButton id="startbutton" onClick={this.takePhoto}>Take photo</CameraButton>
+        <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button>
         {/* <Canvas id="canvas" /> */}
         <canvas id="canvas" style={{ display: 'none' }} />
       </CameraWrapper>
