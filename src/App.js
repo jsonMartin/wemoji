@@ -43,7 +43,7 @@ class App extends Component {
 
     return (
       <Wrapper className="App">
-        <Header>
+        <Header onClick={() => this.props.cameraButtonPressed('I am working with reducer')}>
           WEMoJI
         </Header>
 
