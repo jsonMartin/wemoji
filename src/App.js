@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import Camera from './components/Input.js';
+import Camera from './components/Camera.js';
 
 const Header = styled.header`
   height: 5vh;
