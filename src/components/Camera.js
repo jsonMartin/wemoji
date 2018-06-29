@@ -17,10 +17,8 @@ const CameraWrapper = styled.div`
   /* background-color: green; */
 `;
 
-const Canvas = styled.canvas`
-  width: 100%;
-  min-height: 80vh;
-  object-fit: cover;
+const HiddenCanvas = styled.canvas`
+  display: none;
 `;
 
 const CameraButton = styled.button`
@@ -70,17 +68,13 @@ class Camera extends Component {
   takePhoto() {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
-    // const video = this.videoRef.current;
     const video = document.getElementById('video');
     const photo = document.getElementById('photo');
-    const { width, height } = video.getBoundingClientRect();
-
     const { videoWidth, videoHeight } = video;
-    console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
-    [canvas.width, canvas.height] = [videoWidth, videoHeight];
 
-    console.log('Width, height', videoWidth, videoHeight);
-    // debugger;
+    [canvas.width, canvas.height] = [videoWidth, videoHeight];
+    console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
+
     context.drawImage(video, 0, 0);
     const data = canvas.toDataURL('image/png');
     // console.log(data);
@@ -93,8 +87,9 @@ class Camera extends Component {
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
         {/* <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button> */}
         <CameraButton onClick={this.takePhoto}><span role="img" aria-label="Camera" >📷</span></CameraButton>
-        {/* <Canvas id="canvas" /> */}
-        <canvas id="canvas" style={{ display: 'none' }} />
+
+        {/* Hidden Canvas exists to store image for writing */}
+        <HiddenCanvas id="canvas" />
       </CameraWrapper>
 
     );
