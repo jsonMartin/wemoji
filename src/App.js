@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators, createStore } from 'redux';
 
 import Camera from './components/Camera.js';
+import cameraButtonPressed from './actions/cameraButtonPressed.js';
 
 const EMOJI_YELLOW = '#FDDB5B';
 
@@ -36,6 +39,8 @@ class App extends Component {
     console.log('hi');
   }
   render() {
+    const { image } = this.props;
+
     return (
       <Wrapper className="App">
         <Header>
@@ -47,6 +52,7 @@ class App extends Component {
         </Section>
 
         <Footer>
+          Image: {image}
           <img id="photo" height="100%" alt="The screen capture will appear in this box." />
         </Footer>
       </Wrapper>
@@ -54,4 +60,14 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ cameraButtonPressed }, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    image: state.image,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
