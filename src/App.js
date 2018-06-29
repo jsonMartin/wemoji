@@ -6,9 +6,16 @@ import Typography from '@material-ui/core/Typography';
 
 import Camera from './components/Camera.js';
 
+const EMOJI_YELLOW = '#FDDB5B';
+
 const Header = styled.header`
   height: 5vh;
-  background-color: aqua;
+  background-color: ${EMOJI_YELLOW}; // Emoji yellow
+  text-align: center;
+  vertical-align: center;
+  font-size: 24px;
+  font-family: "Lucida Console", Monaco, monospace;
+  position: relative;
 `;
 
 const Section = styled.section`
@@ -18,8 +25,9 @@ const Section = styled.section`
 `;
 
 const Footer = styled.section`
-  /* height: 15vh; */
+  height: 15vh;
   background-color: blue;
+  overflow: scroll;
 `;
 
 const Wrapper = styled.div`
@@ -34,13 +42,7 @@ class App extends Component {
     return (
       <Wrapper className="App">
         <Header>
-          <AppBar position="static" color="secondary">
-            <Toolbar>
-              <Typography variant="title" color="primary" style={{ 'text-align': 'center' }}>
-                WEMoJI
-              </Typography>
-            </Toolbar>
-          </AppBar>
+          WEMoJI
         </Header>
 
         <Section>

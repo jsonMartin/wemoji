@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
+
+const EMOJI_YELLOW = '#FDDB5B'; // De-dupcliate and fix by putting in a themes file?
 
 const Video = styled.video`
   /* width: 100%;
@@ -16,17 +15,23 @@ const CameraWrapper = styled.div`
   height: 100%;
   width: 100%;
   /* background-color: green; */
-  button {
-    position: absolute;
-    left: 50%;
-    bottom: 210px;
-  }
 `;
 
 const Canvas = styled.canvas`
   width: 100%;
   min-height: 80vh;
   object-fit: cover;
+`;
+
+const CameraButton = styled.button`
+  border-radius: 50%;
+  background-color: ${EMOJI_YELLOW};
+  font-size: 36px;
+  text-align: center;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  bottom: 70px;
 `;
 
 class Camera extends Component {
@@ -86,7 +91,8 @@ class Camera extends Component {
 
       <CameraWrapper className="camera">
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
-        <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button>
+        {/* <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button> */}
+        <CameraButton onClick={this.takePhoto}><span role="img" aria-label="Camera" >📷</span></CameraButton>
         {/* <Canvas id="canvas" /> */}
         <canvas id="canvas" style={{ display: 'none' }} />
       </CameraWrapper>
