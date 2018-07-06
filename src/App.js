@@ -65,8 +65,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  const { image } = state;
+
   return {
-    image: state.image,
+    image,
   };
 }
 
