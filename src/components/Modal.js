@@ -13,18 +13,18 @@ const ModalWrapper = styled.div`
 `;
 
 
-const Modal = ({ image, dismissModal }) => (
+const Modal = ({ image, dismissModal, mode }) => (
   <ModalWrapper onClick={(dismissModal)}>
-    <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." /> }
-    Lala
+    {mode === 'displayProcessedImage' && <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." />}
+    {mode === 'processImage' && <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." />}
   </ModalWrapper>
 );
 
 
 function mapStateToProps(state) {
-  const { image, showModal } = state;
+  const { image, showModal, mode } = state;
 
-  return { image, showModal };
+  return { image, showModal, mode };
 }
 
 function mapDispatchToProps(dispatch) {
