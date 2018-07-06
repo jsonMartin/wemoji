@@ -53,15 +53,11 @@ class App extends Component {
 
         <Footer>
           Image: {image}
-          <img id="photo" height="100%" alt="The screen capture will appear in this box." />
+          <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." />
         </Footer>
       </Wrapper>
     );
   }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ cameraButtonPressed }, dispatch);
 }
 
 function mapStateToProps(state) {
@@ -72,4 +68,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

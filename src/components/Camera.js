@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import cameraButtonPressed from '../actions/cameraButtonPressed.js';
 
@@ -65,17 +66,14 @@ class Camera extends Component {
     const canvas = this.canvasRef.current;
     const context = canvas.getContext('2d');
     const video = this.videoRef.current;
-    const photo = document.getElementById('photo');
     const { videoWidth, videoHeight } = video;
-
     [canvas.width, canvas.height] = [videoWidth, videoHeight];
+
     console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
 
     context.drawImage(video, 0, 0);
     const imageData = canvas.toDataURL('image/png');
-    // console.log(data);
-    photo.setAttribute('src', imageData);
-    cameraButtonPressed(imageData);
+    this.props.cameraButtonPressed(imageData);
   }
 
   render() {
@@ -92,4 +90,9 @@ class Camera extends Component {
   }
 }
 
-export default Camera;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ cameraButtonPressed }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Camera);
+// export default Camera;
