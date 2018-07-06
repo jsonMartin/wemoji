@@ -52,8 +52,7 @@ class App extends Component {
         </Section>
 
         <Footer>
-          Image: {image}
-          <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." />
+          { image && <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." /> }
         </Footer>
       </Wrapper>
     );
@@ -68,5 +67,4 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
 export default connect(mapStateToProps, null)(App);

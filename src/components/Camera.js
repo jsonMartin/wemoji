@@ -90,9 +90,4 @@ class Camera extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ cameraButtonPressed }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(Camera);
-// export default Camera;
+export default connect(null, dispatch => bindActionCreators({ cameraButtonPressed }, dispatch))(Camera);
