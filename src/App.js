@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators, createStore } from 'redux';
 
 import Camera from './components/Camera.js';
-import cameraButtonPressed from './actions/cameraButtonPressed.js';
+import Modal from './components/Modal.js';
 
 const EMOJI_YELLOW = '#FDDB5B';
 
@@ -33,17 +32,19 @@ const Footer = styled.section`
 const Wrapper = styled.div`
 
 `;
+
 class App extends Component {
   constructor() {
     super();
     console.log('hi');
   }
   render() {
-    const { image } = this.props;
+    const { image, showModal } = this.props;
 
     return (
       <Wrapper className="App">
-        <Header onClick={() => this.props.cameraButtonPressed('I am working with reducer')}>
+        {showModal && <Modal />}
+        <Header>
           WEMoJI
         </Header>
 
@@ -60,11 +61,9 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { image } = state;
+  const { image, showModal } = state;
 
-  return {
-    image,
-  };
+  return { image, showModal };
 }
 
 export default connect(mapStateToProps, null)(App);

@@ -24,6 +24,7 @@
         "jsx-a11y/media-has-caption": 0,
         "max-len": 0,
         "arrow-parens": 0,
+        "no-undef": 1,
         "import/extensions": 0,
         "camelcase": 1,
         "indent": [1, 2, { "SwitchCase": 1 }],

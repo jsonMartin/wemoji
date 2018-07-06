@@ -10,5 +10,17 @@ export default combineReducers({
         return state;
     }
   },
+  showModal: (state = false, action) => {
+    switch (action.type) {
+      case 'DISMISS_MODAL':
+        console.log('DISSMISS_MODAL RECEIVED!!!!!!!');
+        return false;
+      case 'CAMERA_BUTTON_PRESSED':
+        console.log('Show modal reducer fired');
+        return true;
+      default:
+        return state;
+    }
+  },
 });
 
