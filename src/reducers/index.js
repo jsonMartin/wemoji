@@ -22,6 +22,7 @@ export default combineReducers({
         return state;
     }
   },
+  // TODO: Remove mode?
   mode: (state = 'camera', action) => { // Modes: camera, processImage, displayImage, photoRoll
     switch (action.type) {
       case 'CAMERA_BUTTON_PRESSED':
@@ -35,21 +36,14 @@ export default combineReducers({
   },
   faceData: (state = null, action) => {
     switch (action.type) {
-      case 'IMAGE_PROCESSED':
+      case 'CAMERA_BUTTON_PRESSED':
+        return null;
+      case 'FACE_DATA_FETCHED':
         console.log('Face data received', action);
         return action.payload;
       default:
         return state;
     }
   },
-  // processedImage: (state = null, action) => {
-  //   switch (action.type) {
-  //     case 'CAMERA_BUTTON_PRESSED':
-  //       processImage(action.payload);
-  //       return 'asdf';
-  //     default:
-  //       return state;
-  //   }
-  // },
 });
 
