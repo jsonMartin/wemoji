@@ -18,6 +18,8 @@
     "rules": {
         // Javascript/ES6
         "no-console": 0, // Allow console logging for Node servers & debugging
+        "no-shadow": 0,
+        "react/sort-comp": 1,
         "import/no-extraneous-dependencies": 1,
         "import/prefer-default-export": 1,
         "no-param-reassign": 0,

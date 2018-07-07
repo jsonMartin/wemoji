@@ -69,11 +69,12 @@ class Camera extends Component {
     const { videoWidth, videoHeight } = video;
     [canvas.width, canvas.height] = [videoWidth, videoHeight];
 
+    context.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
     console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
 
     context.drawImage(video, 0, 0);
     const imageData = canvas.toDataURL('image/png');
-    this.props.cameraButtonPressed(imageData);
+    this.props.cameraButtonPressed({ base64: imageData, canvas });
   }
 
   render() {
