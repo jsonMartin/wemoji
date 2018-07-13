@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';
@@ -10,6 +11,7 @@ import indexReducer from './reducers/index.js';
 
 const store = createStore(
   indexReducer,
+  applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 

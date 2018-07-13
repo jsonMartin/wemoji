@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import fetchFaceData from '../utilities/fetchFaceData.js';
-import setFaceData from '../actions/setFaceData.js';
+import fetchFaceData from '../actions/fetchFaceData.js';
+// import fetchFaceData from '../utilities/fetchFaceData.js';
+// import setFaceData from '../actions/setFaceData.js';
 
 const Canvas = styled.canvas`
   width: 100vw;
@@ -16,9 +17,10 @@ class Photo extends React.Component {
   state = {}
 
   async componentDidMount() {
-    const { image, setFaceData } = this.props;
+    const { image, fetchFaceData } = this.props;
     this.drawImageToCanvas(image);
-    setFaceData(await fetchFaceData(image));
+    fetchFaceData(image);
+    // setFaceData(await fetchFaceData(image));
   }
 
   componentDidUpdate() {
@@ -79,4 +81,4 @@ function mapStateToProps(state) {
 
   return { image, faceData };
 }
-export default connect(mapStateToProps, dispatch => bindActionCreators({ setFaceData }, dispatch))(Photo);
+export default connect(mapStateToProps, dispatch => bindActionCreators({ fetchFaceData }, dispatch))(Photo);
