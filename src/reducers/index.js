@@ -22,18 +22,18 @@ export default combineReducers({
         return state;
     }
   },
-  // TODO: Remove mode?
-  mode: (state = 'camera', action) => { // Modes: camera, processImage, displayImage, photoRoll
-    switch (action.type) {
-      case 'CAMERA_BUTTON_PRESSED':
-        console.log('Switching mode to processImage');
-        return 'processImage';
-      case 'IMAGE_PROCESSED':
-        return 'displayProcessedImage';
-      default:
-        return state;
-    }
-  },
+  // // TODO: Remove mode?
+  // mode: (state = 'camera', action) => { // Modes: camera, processImage, displayImage, photoRoll
+  //   switch (action.type) {
+  //     case 'CAMERA_BUTTON_PRESSED':
+  //       console.log('Switching mode to processImage');
+  //       return 'processImage';
+  //     case 'IMAGE_PROCESSED':
+  //       return 'displayProcessedImage';
+  //     default:
+  //       return state;
+  //   }
+  // },
   faceData: (state = null, action) => {
     switch (action.type) {
       case 'CAMERA_BUTTON_PRESSED':

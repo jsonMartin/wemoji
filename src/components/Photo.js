@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import fetchFaceData from '../actions/fetchFaceData.js';
-// import fetchFaceData from '../utilities/fetchFaceData.js';
-// import setFaceData from '../actions/setFaceData.js';
 
 const Canvas = styled.canvas`
   width: 100vw;
@@ -20,7 +18,6 @@ class Photo extends React.Component {
     const { image, fetchFaceData } = this.props;
     this.drawImageToCanvas(image);
     fetchFaceData(image);
-    // setFaceData(await fetchFaceData(image));
   }
 
   componentDidUpdate() {
