@@ -38,8 +38,10 @@ export default combineReducers({
     switch (action.type) {
       case 'CAMERA_BUTTON_PRESSED':
         return null;
+      case 'FACE_DATA_ERROR':
+        return action.payload;
       case 'FACE_DATA_FETCHED':
-        console.log('Face data received', action);
+        console.log('Face data SUCCESS!', action);
         return action.payload;
       default:
         return state;
