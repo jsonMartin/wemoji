@@ -54,18 +54,59 @@ class Photo extends React.Component {
     console.log('Drawing face data on canvas');
     const { faceData } = this.props;
 
-    if (faceData.length === 0) return this.drawText();
     for (const face of faceData) {
       this.drawFaceRectangleBoxes(face);
+      this.drawEmoji(face);
     }
   }
 
-  drawText(text) {
+  drawText(text, style = {
+    font: '30px Comic Sans MS',
+    fillStyle: 'red',
+    textAlign: 'center',
+  }, x = this.canvas.width / 2, y = this.canvas.height / 2, maxWidth = null) {
     const context = this.canvasContext;
-    context.font = '30px Comic Sans MS';
-    context.fillStyle = 'red';
-    context.textAlign = 'center';
-    context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+
+    context.font = style.font;
+    debugger;
+    context.fillStyle = style.fillStyle;
+    context.textAlign = style.textAlign;
+    if (maxWidth) {
+      // Find best size
+      let txtWidth = context.measureText(text).width;
+      console.log('txtWidth:', txtWidth);
+      while (txtWidth > maxWidth) {
+        debugger;
+        console.error(`txtWidth of ${txtWidth} is greater than maxWidth, will decrease`);
+        const fontSize = context.font.match(/\d*(?=px)/);
+        context.font = context.font.replace(fontSize, fontSize - 1);
+        console.log('New font size:', fontSize - 1);
+
+        txtWidth = context.measureText(text).width;
+      }
+    }
+    context.fillText(text, x, y, maxWidth);
+  }
+
+  drawEmoji({ faceRectangle }) {
+    // const EMOJI_SCALE_FACTOR = 1.3;
+    // const EMOJI_SCALE_FACTOR = 1;
+    const EMOJI_SCALE_FACTOR = 1.5;
+    // const fontSize = 1000;
+    const fontSize = faceRectangle.width * 2;
+    // const fontSize = faceRectangle.width * EMOJI_SCALE_FACTOR;
+    const style = {
+      font: `${fontSize}px Comic Sans MS`,
+      fillStyle: 'yellow',
+      textAlign: 'left',
+      textBaseline: 'middle',
+    };
+
+    // Find Emoji Size
+
+    console.log('fontSizer:', fontSize); // const [x, y] = [(faceRectangle.left + faceRectangle.width) / 2, (faceRectangle.top + faceRectangle.height) / 2];
+    const [x, y] = [faceRectangle.left, (faceRectangle.top + faceRectangle.height)];
+    this.drawText('😎', style, x, y, faceRectangle.width);
   }
 
   drawFaceRectangleBoxes({ faceRectangle }) {
