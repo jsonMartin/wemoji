@@ -37,7 +37,7 @@ export default combineReducers({
   faceData: (state = null, action) => {
     switch (action.type) {
       case 'CAMERA_BUTTON_PRESSED':
-        return null;
+        return 'LOADING';
       case 'FACE_DATA_ERROR':
         return action.payload;
       case 'FACE_DATA_FETCHED':

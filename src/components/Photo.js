@@ -11,20 +11,12 @@ const Canvas = styled.canvas`
 class Photo extends React.Component {
   state = {}
 
-  async componentDidMount() {
-    const { image } = this.props;
-    this.drawImageToCanvas(image);
+  componentDidMount() {
+    this.drawCanvas();
   }
 
   componentDidUpdate() {
-    const { image, faceData } = this.props;
-    this.drawImageToCanvas(image);
-    debugger;
-
-    if (Array.isArray(faceData)) this.drawFaceData();
-    else if (faceData === 'NO_FACES_DETECTED') this.drawText('No faces detected');
-    else if (faceData instanceof Error) this.drawText('Connection Problem');
-    else this.drawText('Unknown problem');
+    this.drawCanvas();
   }
 
   get canvasContext() {
@@ -34,6 +26,18 @@ class Photo extends React.Component {
   get canvas() {
     return this.canvasRef.current;
   }
+
+  drawCanvas() {
+    const { image, faceData } = this.props;
+    this.drawImageToCanvas(image);
+
+    if (Array.isArray(faceData)) this.drawFaceData();
+    else if (faceData === 'LOADING') this.drawText('Analyzing Faces...');
+    else if (faceData === 'NO_FACES_DETECTED') this.drawText('No faces detected');
+    else if (faceData instanceof Error) this.drawText('Connection Problem');
+    else this.drawText('Unknown problem');
+  }
+
 
   drawImageToCanvas() {
     const { image } = this.props;

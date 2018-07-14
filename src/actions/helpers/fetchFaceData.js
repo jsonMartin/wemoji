@@ -38,6 +38,9 @@ export default async (image) => {
   let result;
 
   try {
+    // const DELAY = 500; // in ms
+    // DELAY && await new Promise(resolve => setTimeout(resolve, DELAY));
+
     result = await fetch(URL, {
       method: 'POST',
       headers: {
