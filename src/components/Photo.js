@@ -19,14 +19,12 @@ class Photo extends React.Component {
   componentDidUpdate() {
     const { image, faceData } = this.props;
     this.drawImageToCanvas(image);
-    if (Array.isArray(faceData)) {
-      if (faceData.length === 0) this.drawText('No faces detected');
-      if (faceData.length > 0) this.drawFaceData(); // Draw Face Data, if it exists
-    } else if (faceData instanceof Error) {
-      this.drawText('Connection Problem');
-    } else {
-      this.drawText('Unknown problem');
-    }
+    debugger;
+
+    if (Array.isArray(faceData)) this.drawFaceData();
+    else if (faceData === 'NO_FACES_DETECTED') this.drawText('No faces detected');
+    else if (faceData instanceof Error) this.drawText('Connection Problem');
+    else this.drawText('Unknown problem');
   }
 
   get canvasContext() {
@@ -79,10 +77,12 @@ class Photo extends React.Component {
   render() {
     const { faceData } = this.props;
 
-    return [
-      <Canvas innerRef={this.canvasRef} />,
-      faceData instanceof Error && <section>{faceData.toString()}</section>,
-    ];
+    return (
+      <div>
+        <Canvas innerRef={this.canvasRef} />
+        {faceData instanceof Error && <section>{faceData.toString()}</section>}
+      </div>
+    );
   }
 
   // TODO: Allow to save image

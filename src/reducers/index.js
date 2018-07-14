@@ -41,8 +41,8 @@ export default combineReducers({
       case 'FACE_DATA_ERROR':
         return action.payload;
       case 'FACE_DATA_FETCHED':
-        console.log('Face data SUCCESS!', action);
-        return action.payload;
+        console.log('Face data SUCCESS!', action.payload);
+        return action.payload.length > 0 ? action.payload : 'NO_FACES_DETECTED';
       default:
         return state;
     }
