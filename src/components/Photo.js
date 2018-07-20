@@ -12,6 +12,17 @@ const EMOJI_SCALE_FACTOR = 1; // When increasing, messes up position of box
 // TODO: Fix position of increasing scale factor, for both drawing box & emoji
 // TODO: Create a helper function to return scaled face box for drawing emoji
 
+const EMOJI_EMOTION_MAP = {
+  anger: '😡',
+  contempt: '🤨',
+  disgust: '🤮',
+  fear: '😱',
+  happiness: '😁',
+  neutral: '😑',
+  sadness: '😥',
+  surprise: '😮',
+};
+
 class Photo extends React.Component {
   state = {}
 
@@ -77,7 +88,10 @@ class Photo extends React.Component {
     context.fillText(text, x, y, maxWidth);
   }
 
-  drawEmoji({ faceRectangle }) {
+  drawEmoji({ faceRectangle, faceAttributes }) {
+    const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
+    console.log('Emotion rankings:', JSON.stringify(emotion));
+    const emotion = emotionRanking[0][0];
     const EMOJI_SCALE_FACTOR = 1;
     // const EMOJI_SCALE_FACTOR = 1.5;
     const [top, left, width] = [faceRectangle.top * EMOJI_SCALE_FACTOR, (faceRectangle.left * EMOJI_SCALE_FACTOR), (faceRectangle.width * EMOJI_SCALE_FACTOR)];
@@ -91,11 +105,10 @@ class Photo extends React.Component {
 
 
     console.log('fontSizer:', fontSize); // const [x, y] = [(faceRectangle.left + faceRectangle.width) / 2, (faceRectangle.top + faceRectangle.height) / 2];
-    // const [x, y] = [left, top + fontSize];
     const [x, y] = [left, top + fontSize];
+    this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
     // const [x, y] = [faceRectangle.left, faceRectangle.top + fontSize];
     // const [x, y] = [faceRectangle.left, (faceRectangle.top + faceRectangle.height)];
-    this.drawText('😎', style, x, y, width);
     // this.drawText('😎', style, x, y, faceRectangle.width);
   }
 
