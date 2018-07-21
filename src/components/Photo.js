@@ -114,11 +114,16 @@ class Photo extends React.Component {
 
   drawFaceRectangleBoxes({ faceRectangle }) {
     const context = this.canvasContext;
-    const [top, left, width, height] = [faceRectangle.top * EMOJI_SCALE_FACTOR, faceRectangle.left * EMOJI_SCALE_FACTOR, faceRectangle.width * EMOJI_SCALE_FACTOR, faceRectangle.height * EMOJI_SCALE_FACTOR];
-    context.lineWidth = '6';
-    context.strokeStyle = 'red';
-    context.rect(left, top, width, height);
-    context.stroke();
+
+    for (const factor of [[0, 'pink'], [0.25, 'red'], [0.5, 'green'], [1, 'blue']]) {
+      const EMOJI_SCALE_FACTOR = factor[0];
+      const color = factor[1];
+      const [top, left, width, height] = [(faceRectangle.top - (faceRectangle.top * EMOJI_SCALE_FACTOR)), (faceRectangle.left - (faceRectangle.left * EMOJI_SCALE_FACTOR)), (faceRectangle.width + (faceRectangle.width * EMOJI_SCALE_FACTOR)), (faceRectangle.height + (faceRectangle.height * EMOJI_SCALE_FACTOR))];
+      context.lineWidth = '6';
+      context.strokeStyle = color;
+      context.rect(left, top, width, height);
+      context.stroke();
+    }
   }
 
   canvasRef = React.createRef()
