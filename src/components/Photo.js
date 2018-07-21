@@ -89,18 +89,17 @@ class Photo extends React.Component {
   }
 
   drawEmoji({ faceRectangle, faceAttributes }) {
+    const {
+      top, left, width,
+    } = this.adjustFaceDimensions(faceRectangle, 0.5); // TODO: Change this in ESLINT so it's one line
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
     console.log('Emotion rankings:', JSON.stringify(emotion));
     const emotion = emotionRanking[0][0];
-    const EMOJI_SCALE_FACTOR = 1;
-    // const EMOJI_SCALE_FACTOR = 1.5;
-    const [top, left, width] = [faceRectangle.top * EMOJI_SCALE_FACTOR, (faceRectangle.left * EMOJI_SCALE_FACTOR), (faceRectangle.width * EMOJI_SCALE_FACTOR)];
     const fontSize = width;
     const style = {
       font: `${fontSize}px Comic Sans MS`,
       fillStyle: 'yellow',
       textAlign: 'left',
-      // textBaseline: 'center',
     };
 
 
@@ -112,18 +111,24 @@ class Photo extends React.Component {
     // this.drawText('😎', style, x, y, faceRectangle.width);
   }
 
+  adjustFaceDimensions(faceRectangle, scaleFactor = 0.25) {
+    return {
+      top: (faceRectangle.top - (faceRectangle.top * scaleFactor)),
+      left: (faceRectangle.left - (faceRectangle.left * scaleFactor)),
+      width: (faceRectangle.width + (faceRectangle.width * scaleFactor)),
+      height: (faceRectangle.height + (faceRectangle.height * scaleFactor)),
+    };
+  }
+
   drawFaceRectangleBoxes({ faceRectangle }) {
     const context = this.canvasContext;
-
-    for (const factor of [[0, 'pink'], [0.25, 'red'], [0.5, 'green'], [1, 'blue']]) {
-      const EMOJI_SCALE_FACTOR = factor[0];
-      const color = factor[1];
-      const [top, left, width, height] = [(faceRectangle.top - (faceRectangle.top * EMOJI_SCALE_FACTOR)), (faceRectangle.left - (faceRectangle.left * EMOJI_SCALE_FACTOR)), (faceRectangle.width + (faceRectangle.width * EMOJI_SCALE_FACTOR)), (faceRectangle.height + (faceRectangle.height * EMOJI_SCALE_FACTOR))];
-      context.lineWidth = '6';
-      context.strokeStyle = color;
-      context.rect(left, top, width, height);
-      context.stroke();
-    }
+    const {
+      top, left, width, height,
+    } = this.adjustFaceDimensions(faceRectangle);
+    context.lineWidth = '6';
+    context.strokeStyle = 'yellow';
+    context.rect(left, top, width, height);
+    context.stroke();
   }
 
   canvasRef = React.createRef()
