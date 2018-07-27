@@ -8,9 +8,8 @@ import cameraButtonPressed from '../actions/cameraButtonPressed.js';
 const EMOJI_YELLOW = '#FDDB5B'; // De-dupcliate and fix by putting in a themes file?
 
 const Video = styled.video`
-  /* width: 100%;
-  min-height: 80vh;
-  object-fit: cover; */
+  zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
+  overflow: hidden;
 `;
 
 const CameraWrapper = styled.div`
@@ -54,6 +53,7 @@ class Camera extends Component {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+        // video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
         audio: false,
       });
       video.srcObject = stream;
@@ -80,7 +80,9 @@ class Camera extends Component {
   render() {
     return (
       <CameraWrapper innerRef={this.cameraWrapperRef} className="camera">
+
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
+
         {/* <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button> */}
         <CameraButton onClick={this.takePhoto}><span role="img" aria-label="Camera" >📷</span></CameraButton>
 

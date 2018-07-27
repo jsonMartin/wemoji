@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 const Canvas = styled.canvas`
   width: 100vw;
-  height: 80vh;
+  height: 100vh;
+  max-height: 720px;
+  zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
 `;
 
 
