@@ -27,17 +27,11 @@ class App extends Component {
     return (
       <Wrapper className="App">
         {showModal && <Modal />}
-        {/* <Header>
-          WEMoJI
-        </Header> */}
 
         <Section>
           <Camera />
         </Section>
 
-        {/* <Footer>
-          { image && <img src={image} id="photo" height="100%" alt="The screen capture will appear in this box." /> }
-        </Footer> */}
       </Wrapper>
     );
   }

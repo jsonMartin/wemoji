@@ -83,8 +83,9 @@ class Camera extends Component {
 
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
 
-        {/* <Button variant="fab" color="primary" onClick={this.takePhoto}><AddIcon /></Button> */}
-        <CameraButton onClick={this.takePhoto}><span role="img" aria-label="Camera" >📷</span></CameraButton>
+        <ion-fab onClick={this.takePhoto} vertical="bottom" horizontal="center" slot="fixed">
+          <ion-fab-button />
+        </ion-fab>
 
         {/* Hidden Canvas exists to store image for writing */}
         <HiddenCanvas innerRef={this.canvasRef} id="canvas" />
@@ -93,4 +94,5 @@ class Camera extends Component {
   }
 }
 
-export default connect(null, dispatch => bindActionCreators({ cameraButtonPressed }, dispatch))(Camera);
+export default connect(null, { cameraButtonPressed })(Camera);
+// export default connect(null, dispatch => bindActionCreators({ cameraButtonPressed }, dispatch))(Camera);
