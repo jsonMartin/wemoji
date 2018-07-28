@@ -8,7 +8,7 @@ import Modal from './components/Modal.js';
 const EMOJI_YELLOW = '#FDDB5B';
 
 const Section = styled.section`
-  height: 100vh;
+  height: calc(100vh - 44px);
   background-color: green;
 `;
 
@@ -25,14 +25,25 @@ class App extends Component {
     const { image, showModal } = this.props;
 
     return (
-      <Wrapper className="App">
-        {showModal && <Modal />}
+      <ion-app>
+        <Wrapper className="App">
+          {/* <ion-header translucent style={{ position: 'absolute' }}> */}
 
-        <Section>
-          <Camera />
-        </Section>
 
-      </Wrapper>
+          <ion-content fullscreen>
+            <ion-header translucent style={{ position: 'absolute', height: 0, 'background-color': 'rgba(0,0,0,0)' }}>
+              <ion-toolbar>
+                <ion-title>Wemoji</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            {/* <ion-content> */}
+            <Section>
+              <Camera />
+            </Section>
+          </ion-content>
+
+        </Wrapper>
+      </ion-app>
     );
   }
 }
