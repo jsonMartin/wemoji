@@ -23,6 +23,20 @@ const Logo = styled.img`
   margin-top: 5px;
 `;
 
+async function presentAlert() {
+  const alertController = document.querySelector('ion-alert-controller');
+  await alertController.componentOnReady();
+
+  const alert = await alertController.create({
+    header: 'Wemoji',
+    subHeader: 'Brought to you by POPSUGAR',
+    message: 'Developed by Jason Martin, <br/>Designed by Leighton Kountz',
+    buttons: ['👍'],
+  });
+
+  await alert.present();
+}
+
 class App extends Component {
   constructor() {
     super();
@@ -36,7 +50,7 @@ class App extends Component {
         <Wrapper className="App">
           <ion-header translucent style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
             <ion-toolbar>
-              <ion-title><Logo alt="logo" src="images/Logo.png" /></ion-title>
+              <ion-title onClick={presentAlert}><Logo alt="logo" src="images/Logo.png" /></ion-title>
             </ion-toolbar>
           </ion-header>
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
@@ -45,8 +59,8 @@ class App extends Component {
               <Camera />
             </Section>
           </ion-content>
-
         </Wrapper>
+        <ion-alert-controller />
       </ion-app>
     );
   }
