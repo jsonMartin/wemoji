@@ -8,12 +8,19 @@ import Modal from './components/Modal.js';
 const EMOJI_YELLOW = '#FDDB5B';
 
 const Section = styled.section`
-  height: calc(100vh - 44px);
+  /* height: calc(100vh); */
+  width: 100vw;
+  height: 100vh;
+  /* height: calc(100vh - 100px); */
   background-color: green;
 `;
 
 const Wrapper = styled.div`
+`;
 
+const Logo = styled.img`
+  height: 44px;
+  margin-top: 5px;
 `;
 
 class App extends Component {
@@ -25,18 +32,15 @@ class App extends Component {
     const { image, showModal } = this.props;
 
     return (
-      <ion-app>
+      <ion-app style={{ overflow: 'hidden' }}>
         <Wrapper className="App">
-          {/* <ion-header translucent style={{ position: 'absolute' }}> */}
-
-
-          <ion-content fullscreen>
-            <ion-header translucent style={{ position: 'absolute', height: 0, 'background-color': 'rgba(0,0,0,0)' }}>
-              <ion-toolbar>
-                <ion-title>Wemoji</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            {/* <ion-content> */}
+          <ion-header translucent style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
+            <ion-toolbar>
+              <ion-title><Logo alt="logo" src="images/Logo.png" /></ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
+            {showModal && <Modal />}
             <Section>
               <Camera />
             </Section>
