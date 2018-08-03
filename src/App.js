@@ -89,7 +89,6 @@ class App extends Component {
             </ion-toolbar>
           </ion-header>
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
-            <ion-modal-controller />
             {/* {showModal && <Modal />} */}
             {showModal && <IonModal />}
             <Section>

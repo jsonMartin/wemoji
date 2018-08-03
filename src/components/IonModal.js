@@ -2,56 +2,49 @@ import React, { Component } from 'react';
 import Photo from './Photo.js';
 
 class IonModal extends Component {
-  async presentModal() {
-    // initialize controller
-    const modalController = document.querySelector('ion-modal-controller');
-    await modalController.componentOnReady();
-    // create component to open
-    // const element = document.createElement('div');
-    // element.innerHTML = `
-    //     <ion-header>
-    //       <ion-toolbar>
-    //         <ion-title>Super Modal</ion-title>
-    //       </ion-toolbar>
-    //     </ion-header>
-    //     <ion-content>
-    //       <h1>Content of doom</h1>
-    //       <div>Here's some more content</div>
-    //       <ion-button class="dismiss">Dismiss Modal</ion-button>
-    //     </ion-content>
-    //     `;
-
-    // listen for close event
-    const button = this.modalRef.current.querySelector('ion-button');
-    button.addEventListener('click', () => {
-      modalController.dismiss();
-    });
-
-    // present the modal
-    const modalElement = await modalController.create({
-      component: this.modalRef.current,
-    });
-    modalElement.present();
+  constructor() {
+    super();
+    this.lala = 2;
   }
 
+
+  async componentDidMount() {
+    const modalController = this.modalControllerRef.current;
+    await modalController.componentOnReady();
+    this.modalController = modalController;
+    this.presentModal();
+  }
+    modalController = null;
+
+    async presentModal() {
+      if (!this.modalController) return;
+      const modalElement = await this.modalController.create({ component: this.modalRef.current });
+
+      modalElement.present();
+    }
+
+  modalControllerRef = React.createRef();
   modalRef = React.createRef();
 
-  render() {
-    this.presentModal();
+  dismiss = () => this.modalController && this.modalController.dismiss()
 
+  render() {
     return (
-      <div ref={this.modalRef}>
-        <Photo />
-        {/* <ion-header>
-          <ion-toolbar>
-            <ion-title>Super Modal</ion-title>
-          </ion-toolbar>
-        </ion-header> */}
-        <ion-content>
-          {/* <div>Here is some more content</div> */}
-          <ion-button class="dismiss">Dismiss Modal</ion-button>
-        </ion-content>
-      </div>
+      <section id="modalWrapper">
+        <ion-modal-controller ref={this.modalControllerRef} />
+        <div ref={this.modalRef}>
+          <ion-fab vertical="top" horizontal="start" slot="fixed">
+            <ion-fab-button>
+              <ion-icon name="back" onClick={this.dismiss} />
+            </ion-fab-button>
+          </ion-fab>
+
+          <Photo />
+          <ion-content>
+            <ion-button class="dismiss">Dismiss Modal</ion-button>
+          </ion-content>
+        </div>
+      </section>
     );
   }
 }
