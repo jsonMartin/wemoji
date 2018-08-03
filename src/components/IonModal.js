@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import Photo from './Photo.js';
+import styled from 'styled-components';
 import { bindActionCreators } from '../../../../Library/Caches/typescript/2.9/node_modules/redux';
 import { connect } from 'react-redux';
 
 const ANIMATION_DELAY = 300; // in ms
 
+const backButton = styled('ion-fab')`
+    background-color: pink;
+`;
+
+const ModalContent = styled.div`
+
+`;
 class IonModal extends Component {
   constructor() {
     super();
@@ -49,7 +57,7 @@ class IonModal extends Component {
 
   renderModalContents() {
     return (
-      <div className="modalContent">
+      <ModalContent>
         <ion-fab vertical="top" horizontal="start" slot="fixed">
           <ion-fab-button>
             <ion-icon name="back" onClick={this.dismiss} />
@@ -61,7 +69,7 @@ class IonModal extends Component {
         <ion-content>
           <ion-button class="dismiss">Dismiss Modal</ion-button>
         </ion-content>
-      </div>
+      </ModalContent>
     );
   }
 
