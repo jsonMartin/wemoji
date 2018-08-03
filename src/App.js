@@ -92,7 +92,7 @@ class App extends Component {
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
             {/* {showModal && <Modal />} */}
             {/* {showModal && <IonModal />} */}
-            {<IonModal show={showModal} />}
+            {<IonModal />}
             <Section>
               <Camera />
             </Section>

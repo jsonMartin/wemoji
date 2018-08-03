@@ -3,27 +3,34 @@ import Photo from './Photo.js';
 import { bindActionCreators } from '../../../../Library/Caches/typescript/2.9/node_modules/redux';
 import { connect } from 'react-redux';
 
+const ANIMATION_DELAY = 300; // in ms
+
 class IonModal extends Component {
   constructor() {
     super();
     this.lala = 2;
   }
 
-  //   componentDidUpdate() {
-  //     debugger;
-  //   }
-
-  //   propsWill
-
   async componentDidMount() {
     const modalController = this.modalControllerRef.current;
     await modalController.componentOnReady();
     this.modalController = modalController;
-    // this.presentModal();
   }
 
   get shouldShow() {
     return this.props.showModal;
+  }
+
+  componentDidUpdate(prevProps) {
+    // debugger;
+    if (prevProps.showModal !== this.props.showModal) {
+      if (this.props.showModal) {
+        console.log('PRESENTING MODAL!');
+        this.presentModal();
+      } else {
+        console.log('Not presenting modal');
+      }
+    }
   }
 
   async presentModal() {
@@ -36,13 +43,13 @@ class IonModal extends Component {
   modalRef = React.createRef();
 
   dismiss = () => {
-    this.modalController && this.modalController.dismiss();
-    this.props.dismissModal();
+    this.modalController.dismiss();
+    setTimeout(this.props.dismissModal, ANIMATION_DELAY);
   }
 
   renderModalContents() {
     return (
-      <div ref={this.modalRef}>
+      <div className="modalContent">
         <ion-fab vertical="top" horizontal="start" slot="fixed">
           <ion-fab-button>
             <ion-icon name="back" onClick={this.dismiss} />
@@ -63,7 +70,10 @@ class IonModal extends Component {
     return (
       <section className="modalWrapper">
         <ion-modal-controller ref={this.modalControllerRef} />
-        { this.shouldShow && this.renderModalContents() }
+
+        <section ref={this.modalRef}>
+          { this.shouldShow && this.renderModalContents() }
+        </section>
       </section>
     );
   }
