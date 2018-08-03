@@ -143,9 +143,4 @@ class Photo extends React.Component {
   // TODO: Allow to save image
 }
 
-function mapStateToProps(state) {
-  const { image, faceData } = state;
-
-  return { image, faceData };
-}
-export default connect(mapStateToProps, null)(Photo);
+export default connect(({ image, faceData }) => ({ image, faceData }), null)(Photo);
