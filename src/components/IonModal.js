@@ -11,7 +11,9 @@ const backButton = styled('ion-fab')`
 `;
 
 const ModalContent = styled.div`
-
+    ion-fab-button {
+        --ion-color-base: rgba(0,0,0,.2);
+    }
 `;
 class IonModal extends Component {
   constructor() {
@@ -60,7 +62,7 @@ class IonModal extends Component {
       <ModalContent>
         <ion-fab vertical="top" horizontal="start" slot="fixed">
           <ion-fab-button>
-            <ion-icon name="back" onClick={this.dismiss} />
+            <ion-icon name="arrow-back" color="primary" onClick={this.dismiss} />
           </ion-fab-button>
         </ion-fab>
 
