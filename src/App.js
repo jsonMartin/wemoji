@@ -79,6 +79,7 @@ class App extends Component {
   }
   render() {
     const { image, showModal } = this.props;
+    // debugger;
 
     return (
       <ion-app style={{ overflow: 'hidden' }}>
@@ -90,7 +91,8 @@ class App extends Component {
           </ion-header>
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
             {/* {showModal && <Modal />} */}
-            {showModal && <IonModal />}
+            {/* {showModal && <IonModal />} */}
+            {<IonModal show={showModal} />}
             <Section>
               <Camera />
             </Section>
