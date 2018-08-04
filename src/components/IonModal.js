@@ -11,7 +11,7 @@ const backButton = styled('ion-fab')`
 `;
 
 const ModalContent = styled.div`
-    ion-fab-button {
+    ion-toolbar > ion-fab-button {
         --ion-color-base: rgba(0,0,0,.2);
     }
 `;
@@ -89,9 +89,16 @@ class IonModal extends Component {
 
         <Photo />
 
-        <ion-content>
-          <ion-button class="dismiss">Dismiss Modal</ion-button>
-        </ion-content>
+        <ion-fab vertical="bottom" horizontal="center">
+          <ion-fab-button>Share</ion-fab-button>
+
+          <ion-fab-list side="top">
+            <ion-fab-button>Facebook</ion-fab-button>
+            <ion-fab-button>Twitter</ion-fab-button>
+            <ion-fab-button>Youtube</ion-fab-button>
+          </ion-fab-list>
+
+        </ion-fab>
       </ModalContent>
     );
   }
