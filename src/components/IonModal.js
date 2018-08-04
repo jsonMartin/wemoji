@@ -15,6 +15,12 @@ const ModalContent = styled.div`
         --ion-color-base: rgba(0,0,0,.2);
     }
 `;
+
+const Logo = styled.img`
+  height: 44px;
+  margin-top: 5px;
+`;
+
 class IonModal extends Component {
   constructor() {
     super();
@@ -57,14 +63,29 @@ class IonModal extends Component {
     setTimeout(this.props.dismissModal, ANIMATION_DELAY);
   }
 
+  renderHeader() {
+    return (
+      <ion-toolbar style={{ position: 'absolute' }}>
+        <ion-fab-button>
+          <ion-icon name="arrow-back" color="primary" onClick={this.dismiss} />
+        </ion-fab-button>
+        <ion-title><Logo alt="logo" src="images/Logo.png" /></ion-title>
+      </ion-toolbar>
+    );
+  }
+
   renderModalContents() {
     return (
       <ModalContent>
-        <ion-fab vertical="top" horizontal="start" slot="fixed">
+        {this.renderHeader()}
+        {/* <header>
+              lala
+        </header> */}
+        {/* <ion-fab vertical="top" horizontal="start" slot="fixed">
           <ion-fab-button>
             <ion-icon name="arrow-back" color="primary" onClick={this.dismiss} />
           </ion-fab-button>
-        </ion-fab>
+        </ion-fab> */}
 
         <Photo />
 

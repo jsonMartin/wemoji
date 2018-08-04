@@ -84,7 +84,7 @@ class App extends Component {
     return (
       <ion-app style={{ overflow: 'hidden' }}>
         <Wrapper className="App">
-          <ion-header translucent style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
+          <ion-header style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
             <ion-toolbar>
               <ion-title onClick={presentModal}><Logo alt="logo" src="images/Logo.png" /></ion-title>
             </ion-toolbar>
