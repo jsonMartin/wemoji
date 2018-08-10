@@ -100,8 +100,9 @@ class Photo extends React.Component {
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
     console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     const emotion = emotionRanking[0][0];
-    const [midX, midY] = [left + (width / 2), top + (height / 2)];
-    const [x, y] = [left, (top * 0.9) + height];
+    // const [midX, midY] = [left + (width / 2), top + (height / 2)];
+    // const [x, y] = [left, (top * 0.9) + height];
+    const [x, y] = [left, top + height];
 
     const adjustedX = x * 0.75;
     const adjustedWidth = width * 1.25;
@@ -145,7 +146,7 @@ class Photo extends React.Component {
     // const [midY, midX] = [((top + height) / 2) + top, ((left + width) / 2) + left];
     console.log(`Top: ${top}, left: ${left}, width: ${width}, height: ${height}`);
     console.log(`midX: ${midX}, midY: ${midY}`);
-    context.lineWidth = '30';
+    context.lineWidth = '10';
     context.strokeStyle = 'red';
     // context.rect(midX, midY, 1, 1);
     context.arc(midX, midY, 10, 0, 2 * Math.PI);
