@@ -91,12 +91,9 @@ class Photo extends React.Component {
   }
 
   drawEmoji({ faceRectangle, faceAttributes }) {
-    // const {
-    //   top, left, width,
-    // } = this.adjustFaceDimensions(faceRectangle, 0.5); // TODO: Change this in ESLINT so it's one line
     const {
       top, left, width, height,
-    } = faceRectangle; // TODO: Change this in ESLINT so it's one line
+    } = faceRectangle;
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
     console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     const emotion = emotionRanking[0][0];
@@ -124,23 +121,11 @@ class Photo extends React.Component {
     // this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
   }
 
-  // TODO: Fix position of increasing scale factor
-  adjustFaceDimensions(faceRectangle, scaleFactor = 0.25) {
-    return faceRectangle;
-    // return {
-    //   top: (faceRectangle.top - (faceRectangle.top * scaleFactor)),
-    //   left: (faceRectangle.left - (faceRectangle.left * scaleFactor)),
-    //   width: (faceRectangle.width + (faceRectangle.width * scaleFactor)),
-    //   height: (faceRectangle.height + (faceRectangle.height * scaleFactor)),
-    // };
-  }
-
   drawFaceMidpoint({ faceRectangle }) {
-    // debugger;
     const context = this.canvasContext;
     const {
       top, left, width, height,
-    } = faceRectangle; // this.adjustFaceDimensions(faceRectangle);
+    } = faceRectangle;
 
     const [midX, midY] = [left + (width / 2), top + (height / 2)];
     // const [midY, midX] = [((top + height) / 2) + top, ((left + width) / 2) + left];
@@ -157,7 +142,7 @@ class Photo extends React.Component {
     const context = this.canvasContext;
     const {
       top, left, width, height,
-    } = this.adjustFaceDimensions(faceRectangle);
+    } = faceRectangle;
     context.lineWidth = '6';
     context.strokeStyle = 'yellow';
     context.rect(left, top, width, height);
