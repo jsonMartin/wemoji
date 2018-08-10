@@ -9,7 +9,6 @@ const Canvas = styled.canvas`
   zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
 `;
 
-
 const EMOJI_EMOTION_MAP = {
   anger: '😡',
   contempt: '🤨',
@@ -20,6 +19,8 @@ const EMOJI_EMOTION_MAP = {
   sadness: '😥',
   surprise: '😮',
 };
+
+const isDebugMode = () => /debug=true/g.test(window.location.href);
 
 class Photo extends React.Component {
   state = {}
@@ -41,15 +42,25 @@ class Photo extends React.Component {
   }
 
   drawCanvas() {
-    const { image, faceData } = this.props;
+    const { image, faceData, faceDataStatus } = this.props;
     this.drawImageToCanvas(image);
 
-    if (Array.isArray(faceData)) {
-      this.drawFaceData();
-    } else if (faceData === 'LOADING') this.drawText('Analyzing Faces...');
-    else if (faceData === 'NO_FACES_DETECTED') this.drawText('No faces detected');
-    else if (faceData instanceof Error) this.drawText('Connection Problem');
-    else this.drawText('Unknown problem');
+    switch (faceDataStatus) {
+      case 'SUCCESS':
+        this.drawFaceData();
+        break;
+      case 'LOADING':
+        this.drawText('Analyzing Faces...');
+        break;
+      case 'NO_FACES_DETECTED':
+        this.drawText('No faces detected');
+        break;
+      case 'FACE_DATA_ERROR':
+        this.drawText('Connection Problem');
+        break;
+      default:
+        this.drawText('Unknown problem');
+    }
   }
 
 
@@ -69,10 +80,12 @@ class Photo extends React.Component {
     const { faceData } = this.props;
 
     for (const face of faceData) {
-      this.drawFaceRectangleBoxes(face);
-      // setTimeout(() => this.drawEmoji(face), 2000);
-      window.requestAnimationFrame(() => this.drawEmoji(face));
-      window.requestAnimationFrame(() => this.drawFaceMidpoint(face));
+      this.drawEmoji(face);
+
+      if (isDebugMode()) {
+        this.drawFaceRectangleBoxes(face);
+        window.requestAnimationFrame(() => this.drawFaceMidpoint(face));
+      }
     }
   }
 
@@ -128,12 +141,10 @@ class Photo extends React.Component {
     } = faceRectangle;
 
     const [midX, midY] = [left + (width / 2), top + (height / 2)];
-    // const [midY, midX] = [((top + height) / 2) + top, ((left + width) / 2) + left];
     console.log(`Top: ${top}, left: ${left}, width: ${width}, height: ${height}`);
     console.log(`midX: ${midX}, midY: ${midY}`);
     context.lineWidth = '10';
     context.strokeStyle = 'red';
-    // context.rect(midX, midY, 1, 1);
     context.arc(midX, midY, 10, 0, 2 * Math.PI);
     context.stroke();
   }
@@ -165,4 +176,4 @@ class Photo extends React.Component {
   // TODO: Allow to save image
 }
 
-export default connect(({ image, faceData }) => ({ image, faceData }), null)(Photo);
+export default connect(({ image, faceData, faceDataStatus }) => ({ image, faceData, faceDataStatus }), null)(Photo);
