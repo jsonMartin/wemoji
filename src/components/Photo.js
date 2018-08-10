@@ -44,8 +44,9 @@ class Photo extends React.Component {
     const { image, faceData } = this.props;
     this.drawImageToCanvas(image);
 
-    if (Array.isArray(faceData)) this.drawFaceData();
-    else if (faceData === 'LOADING') this.drawText('Analyzing Faces...');
+    if (Array.isArray(faceData)) {
+      this.drawFaceData();
+    } else if (faceData === 'LOADING') this.drawText('Analyzing Faces...');
     else if (faceData === 'NO_FACES_DETECTED') this.drawText('No faces detected');
     else if (faceData instanceof Error) this.drawText('Connection Problem');
     else this.drawText('Unknown problem');
@@ -68,8 +69,10 @@ class Photo extends React.Component {
     const { faceData } = this.props;
 
     for (const face of faceData) {
+      this.drawFaceMidpoint(face);
       this.drawFaceRectangleBoxes(face);
-      this.drawEmoji(face);
+      setTimeout(() => this.drawEmoji(face), 2000);
+      // this.drawEmoji(face);
     }
   }
 
@@ -87,13 +90,17 @@ class Photo extends React.Component {
   }
 
   drawEmoji({ faceRectangle, faceAttributes }) {
+    // const {
+    //   top, left, width,
+    // } = this.adjustFaceDimensions(faceRectangle, 0.5); // TODO: Change this in ESLINT so it's one line
     const {
-      top, left, width,
-    } = this.adjustFaceDimensions(faceRectangle, 0.5); // TODO: Change this in ESLINT so it's one line
+      top, left, width, height,
+    } = faceRectangle; // TODO: Change this in ESLINT so it's one line
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
-    console.log('Emotion rankings:', JSON.stringify(emotion));
+    console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     const emotion = emotionRanking[0][0];
     const fontSize = width;
+    const [midX, midY] = [left + (width / 2), top + (height / 2)];
     const style = {
       font: `${fontSize}px Comic Sans MS`,
       fillStyle: 'yellow',
@@ -102,18 +109,39 @@ class Photo extends React.Component {
 
 
     console.log('fontSizer:', fontSize); // const [x, y] = [(faceRectangle.left + faceRectangle.width) / 2, (faceRectangle.top + faceRectangle.height) / 2];
-    const [x, y] = [left, top + fontSize];
+    // const [x, y] = [left, top + fontSize];
+    const [x, y] = [left, (top * 0.9) + height];
+    // const [x, y] = [left, top];
     this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
   }
 
   // TODO: Fix position of increasing scale factor
   adjustFaceDimensions(faceRectangle, scaleFactor = 0.25) {
-    return {
-      top: (faceRectangle.top - (faceRectangle.top * scaleFactor)),
-      left: (faceRectangle.left - (faceRectangle.left * scaleFactor)),
-      width: (faceRectangle.width + (faceRectangle.width * scaleFactor)),
-      height: (faceRectangle.height + (faceRectangle.height * scaleFactor)),
-    };
+    return faceRectangle;
+    // return {
+    //   top: (faceRectangle.top - (faceRectangle.top * scaleFactor)),
+    //   left: (faceRectangle.left - (faceRectangle.left * scaleFactor)),
+    //   width: (faceRectangle.width + (faceRectangle.width * scaleFactor)),
+    //   height: (faceRectangle.height + (faceRectangle.height * scaleFactor)),
+    // };
+  }
+
+  drawFaceMidpoint({ faceRectangle }) {
+    // debugger;
+    const context = this.canvasContext;
+    const {
+      top, left, width, height,
+    } = faceRectangle; // this.adjustFaceDimensions(faceRectangle);
+
+    const [midX, midY] = [left + (width / 2), top + (height / 2)];
+    // const [midY, midX] = [((top + height) / 2) + top, ((left + width) / 2) + left];
+    console.log(`Top: ${top}, left: ${left}, width: ${width}, height: ${height}`);
+    console.log(`midX: ${midX}, midY: ${midY}`);
+    context.lineWidth = '30';
+    context.strokeStyle = 'red';
+    // context.rect(midX, midY, 1, 1);
+    context.arc(midX, midY, 10, 0, 2 * Math.PI);
+    context.stroke();
   }
 
   drawFaceRectangleBoxes({ faceRectangle }) {

@@ -1,6 +1,6 @@
 import param from 'jquery-param';
 
-const SUBSCRIPTION_KEY = 'e6190b9594d74a4c98a89a415ee64b72';
+const SUBSCRIPTION_KEY = 'e29dde98533040dabe35258562bbb030';
 const URI_BASE = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect';
 
 const makeblob = (dataURL) => {

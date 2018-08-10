@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import cameraButtonPressed from '../actions/cameraButtonPressed.js';
 
@@ -95,4 +94,3 @@ class Camera extends Component {
 }
 
 export default connect(null, { cameraButtonPressed })(Camera);
-// export default connect(null, dispatch => bindActionCreators({ cameraButtonPressed }, dispatch))(Camera);
