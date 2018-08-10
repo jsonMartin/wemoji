@@ -69,15 +69,15 @@ class Photo extends React.Component {
     const { faceData } = this.props;
 
     for (const face of faceData) {
-      this.drawFaceMidpoint(face);
       this.drawFaceRectangleBoxes(face);
-      setTimeout(() => this.drawEmoji(face), 2000);
-      // this.drawEmoji(face);
+      // setTimeout(() => this.drawEmoji(face), 2000);
+      window.requestAnimationFrame(() => this.drawEmoji(face));
+      window.requestAnimationFrame(() => this.drawFaceMidpoint(face));
     }
   }
 
   drawText(text, style = {
-    font: '30px Comic Sans MS',
+    font: '25px Comic Sans MS',
     fillStyle: 'red',
     textAlign: 'center',
   }, x = this.canvas.width / 2, y = this.canvas.height / 2, maxWidth = null) {
@@ -86,7 +86,8 @@ class Photo extends React.Component {
     context.font = style.font;
     context.fillStyle = style.fillStyle;
     context.textAlign = style.textAlign;
-    context.fillText(text, x, y, maxWidth);
+    context.fillText(text, x, y);
+    // context.fillText(text, x, y, maxWidth);
   }
 
   drawEmoji({ faceRectangle, faceAttributes }) {
@@ -99,8 +100,13 @@ class Photo extends React.Component {
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
     console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     const emotion = emotionRanking[0][0];
-    const fontSize = width;
     const [midX, midY] = [left + (width / 2), top + (height / 2)];
+    const [x, y] = [left, (top * 0.9) + height];
+
+    const adjustedX = x * 0.75;
+    const adjustedWidth = width * 1.25;
+
+    const fontSize = adjustedWidth;
     const style = {
       font: `${fontSize}px Comic Sans MS`,
       fillStyle: 'yellow',
@@ -110,9 +116,11 @@ class Photo extends React.Component {
 
     console.log('fontSizer:', fontSize); // const [x, y] = [(faceRectangle.left + faceRectangle.width) / 2, (faceRectangle.top + faceRectangle.height) / 2];
     // const [x, y] = [left, top + fontSize];
-    const [x, y] = [left, (top * 0.9) + height];
     // const [x, y] = [left, top];
-    this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
+
+
+    this.drawText(EMOJI_EMOTION_MAP[emotion], style, x - ((adjustedWidth - width) / 2), y, adjustedWidth);
+    // this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
   }
 
   // TODO: Fix position of increasing scale factor
