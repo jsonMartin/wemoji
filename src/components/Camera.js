@@ -83,7 +83,9 @@ class Camera extends Component {
         <Video innerRef={this.videoRef} id="video" autoPlay>Camera not available.</Video> {/* (Styled Componenents requires using "innerRef") */}
 
         <ion-fab onClick={this.takePhoto} vertical="bottom" horizontal="center" slot="fixed">
-          <ion-fab-button />
+          <ion-fab-button >
+            <ion-icon name="camera" />
+          </ion-fab-button>
         </ion-fab>
 
         {/* Hidden Canvas exists to store image for writing */}

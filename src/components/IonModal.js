@@ -10,9 +10,17 @@ const backButton = styled('ion-fab')`
     background-color: pink;
 `;
 
+const ShareButtons = styled('ion-fab')`
+  --ion-color-primary: pink;
+`;
+
 const ModalContent = styled.div`
     ion-toolbar > ion-fab-button {
         --ion-color-base: rgba(0,0,0,.2);
+    }
+
+    ion-fab {
+      --ion-color-primary: #4387FF;
     }
 `;
 
@@ -33,9 +41,6 @@ class IonModal extends Component {
     this.modalController = modalController;
   }
 
-  get shouldShow() {
-    return this.props.showModal;
-  }
 
   componentDidUpdate(prevProps) {
     // debugger;
@@ -47,6 +52,9 @@ class IonModal extends Component {
         console.log('Not presenting modal');
       }
     }
+  }
+  get shouldShow() {
+    return this.props.showModal;
   }
 
   async presentModal() {
@@ -67,7 +75,7 @@ class IonModal extends Component {
     return (
       <ion-toolbar style={{ position: 'absolute' }}>
         <ion-fab-button>
-          <ion-icon name="arrow-back" color="primary" onClick={this.dismiss} />
+          <ion-icon name="close" color="primary" onClick={this.dismiss} />
         </ion-fab-button>
         <ion-title><Logo alt="logo" src="images/Logo.png" /></ion-title>
       </ion-toolbar>
@@ -78,24 +86,16 @@ class IonModal extends Component {
     return (
       <ModalContent>
         {this.renderHeader()}
-        {/* <header>
-              lala
-        </header> */}
-        {/* <ion-fab vertical="top" horizontal="start" slot="fixed">
-          <ion-fab-button>
-            <ion-icon name="arrow-back" color="primary" onClick={this.dismiss} />
-          </ion-fab-button>
-        </ion-fab> */}
-
         <Photo />
 
-        <ion-fab vertical="bottom" horizontal="center">
-          <ion-fab-button>Share</ion-fab-button>
+        <ion-fab vertical="bottom" horizontal="center" class="sharing">
+          <ion-fab-button><ion-icon name="share" /></ion-fab-button>
 
           <ion-fab-list side="top">
-            <ion-fab-button>Facebook</ion-fab-button>
-            <ion-fab-button>Twitter</ion-fab-button>
-            <ion-fab-button>Youtube</ion-fab-button>
+            <ion-fab-button><ion-icon name="download" /></ion-fab-button>
+            <ion-fab-button><ion-icon name="logo-instagram" /></ion-fab-button>
+            <ion-fab-button><ion-icon name="logo-twitter" /></ion-fab-button>
+            <ion-fab-button><ion-icon name="logo-youtube" /></ion-fab-button>
           </ion-fab-list>
 
         </ion-fab>

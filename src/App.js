@@ -39,39 +39,6 @@ async function presentAlert() {
   await alert.present();
 }
 
-async function presentModal() {
-  // initialize controller
-  const modalController = document.querySelector('ion-modal-controller');
-  await modalController.componentOnReady();
-
-  // create component to open
-  const element = document.createElement('div');
-  element.innerHTML = `
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Super Modal</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <h1>Content of doom</h1>
-    <div>Here's some more content</div>
-    <ion-button class="dismiss">Dismiss Modal</ion-button>
-  </ion-content>
-  `;
-
-  // listen for close event
-  const button = element.querySelector('ion-button');
-  button.addEventListener('click', () => {
-    modalController.dismiss();
-  });
-
-  // present the modal
-  const modalElement = await modalController.create({
-    component: element,
-  });
-  modalElement.present();
-}
-
 class App extends Component {
   constructor() {
     super();
@@ -86,7 +53,7 @@ class App extends Component {
         <Wrapper className="App">
           <ion-header style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
             <ion-toolbar>
-              <ion-title onClick={presentModal}><Logo alt="logo" src="images/Logo.png" /></ion-title>
+              <ion-title onClick={presentAlert}><Logo alt="logo" src="images/Logo.png" /></ion-title>
             </ion-toolbar>
           </ion-header>
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
