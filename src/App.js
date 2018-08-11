@@ -83,7 +83,6 @@ class App extends Component {
       const [width, height] = [this.width, this.height];
       this.props.cameraButtonPressed({
         base64, img, width, height,
-        // base64, img, width: this.naturalWidth, height: this.naturalHeight,
       });
       this.hiddenFileInputRef.current.value = '';
     };

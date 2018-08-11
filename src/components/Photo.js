@@ -75,12 +75,26 @@ class Photo extends React.Component {
       console.log('Drawing image on canvas');
       context.drawImage(image.canvas, 0, 0);
     } else { // Is a user uploaded image
-      canvas.width = 320;
-      canvas.height = 640;
+      // canvas.width = 320;
+      // canvas.height = 640;
       // canvas.width = '320px';
       // canvas.height = '640px';
-      debugger;
-      context.drawImage(image.img, 0, 0);
+      // debugger;
+      const { img } = image;
+
+      // const hRatio = img.width / window.innerWidth;
+      // const vRatio = img.height / window.innerHeight;
+      const hRatio = window.innerWidth / img.width;
+      const vRatio = window.innerHeight / img.height;
+      const ratio = Math.min(hRatio, vRatio);
+      // debugger;
+      canvas.width = img.width * hRatio;
+      canvas.height = img.height * vRatio;
+
+      // canvas.height = img.height;
+      // canvas.width = img.width;
+      // context.drawImage(img, 0, 0, img.width, img.height);
+      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
     }
   }
 
