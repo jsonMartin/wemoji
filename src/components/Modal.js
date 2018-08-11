@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from '../../../../Library/Caches/typescript/2.9/node_modules/redux';
+import { bindActionCreators } from 'redux';
 
 import Photo from './Photo.js';
 

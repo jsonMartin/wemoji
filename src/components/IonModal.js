@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Photo from './Photo.js';
 import styled from 'styled-components';
-import { bindActionCreators } from '../../../../Library/Caches/typescript/2.9/node_modules/redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const ANIMATION_DELAY = 300; // in ms
