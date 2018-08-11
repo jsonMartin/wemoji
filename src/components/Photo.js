@@ -14,18 +14,20 @@ const Canvas = styled.canvas`
   z-index: 3;
   max-width: none;
 
+  /* ONLY APPLY THIS ON iPHONE! */
+  /*
   position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-      max-width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  */
 
-
-    /* &.uploaded {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-      max-width: 100%;
-    } */
+    &.uploaded {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 100%;
+  }
 `;
 
 

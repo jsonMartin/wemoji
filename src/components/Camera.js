@@ -10,10 +10,13 @@ const Video = styled.video`
   zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
   overflow: hidden;
 
+  /* Only enable this for iPHONE MODE! */
+  /*
    position: relative;
    top: 50%;
    transform: translateY(-50%);
    max-width: 100%;
+   */
 `;
 
 const CameraWrapper = styled.div`
@@ -59,11 +62,11 @@ class Camera extends Component {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         // video: { width: { min: 640 }, height: { min: 480} },
-        // video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
-        video: (!isSafari ?
-          ({ width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } })
-            :
-          ({ width: { min: 640 }, height: { min: 480} })),
+        video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+        // video: (!isSafari ?
+        //   ({ width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } })
+        //     :
+        //   ({ width: { min: 640 }, height: { min: 480} })),
         audio: false,
       });
       video.srcObject = stream;
