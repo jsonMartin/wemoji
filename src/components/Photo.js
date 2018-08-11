@@ -2,12 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+const PhotoWrapper = styled.div`
+    background-color: brown; // TODO: Change this
+    height: 100vh;
+`;
+
 const Canvas = styled.canvas`
   // width: 100vw;
   // height: 100vh;
   max-height: 720px;
   z-index: 3;
-  max-width: 100%;
+  max-width: none;
+
+    &.uploaded {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: 100%;
+    }
+
 `;
 
 
@@ -87,38 +100,16 @@ class Photo extends React.Component {
       console.log('Drawing image on canvas');
       context.drawImage(image.canvas, 0, 0);
     } else { // Is a user uploaded image
-      // canvas.width = 320;
-      // canvas.height = 640;
-      // canvas.width = '320px';
-      // canvas.height = '640px';
-      // debugger;
       console.log('Drawing uploaded photo on canvas');
-
-      // const hiddenCanvas = this.hiddenCanvasRef.current;
-      // const hiddenContext = hiddenCanvas.getContext('2d');
-      // hiddenContext.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
       const { img } = image;
 
         canvas.width = img.width;
         canvas.height = img.height;
-        canvas.style.width = '';
-        canvas.style.height = '';
 
-      // const hRatio = img.width / window.innerWidth;
-      // const vRatio = img.height / window.innerHeight;
       const hRatio = window.innerWidth / img.width;
       const vRatio = window.innerHeight / img.height;
       const ratio = Math.min(hRatio, vRatio);
-      // debugger;
-
-      // canvas.height = img.height;
-      // canvas.width = img.width;
-      // context.drawImage(img, 0, 0, img.width, img.height);
-
-      // hiddenCanvas.width = img.width;
-      // hiddenCanvas.height = img.height;
-
-        debugger;
+        // debugger;
       context.drawImage(img, 0, 0);
       // context.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
       // hiddenContext.drawImage(img, 0, 0, img.width, img.height);
@@ -232,12 +223,12 @@ class Photo extends React.Component {
     const { faceData } = this.props;
 
     return (
-      <div>
-        <Canvas innerRef={this.canvasRef} />
+      <PhotoWrapper className={ !this.props.image.canvas ? 'uploaded' : '' } >
+        <Canvas innerRef={this.canvasRef} className={ !this.props.image.canvas ? 'uploaded' : '' } />
         {faceData instanceof Error && <section>{faceData.toString()}</section>}
         {/* <HiddenCanvas id="hidden-canvas" innerRef={this.hiddenCanvasRef} style={{ width: '100vw', height: '100vh' }} /> */}
-        <canvas id="hidden-canvas" ref={this.hiddenCanvasRef} style={{ width: '100vw', height: '100vh', display: 'none' }} />
-      </div>
+        <canvas id="hidden-canvas" ref={this.hiddenCanvasRef}  style={{ width: '100vw', height: '100vh', display: 'none' }} />
+      </PhotoWrapper>
     );
   }
 
