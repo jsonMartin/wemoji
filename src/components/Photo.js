@@ -6,7 +6,16 @@ const Canvas = styled.canvas`
   width: 100vw;
   height: 100vh;
   max-height: 720px;
-  zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
+  z-index: 3;
+`;
+
+
+const HiddenCanvas = styled.canvas`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  z-index: 2;
 `;
 
 const EMOJI_EMOTION_MAP = {
@@ -38,7 +47,7 @@ class Photo extends React.Component {
   }
 
   get canvas() {
-    return this.canvasRef.current;
+    return this.props.image.canvas ? this.canvasRef.current : this.hiddenCanvasRef.current;
   }
 
   drawCanvas() {
@@ -72,6 +81,7 @@ class Photo extends React.Component {
     if (image.canvas) {
       canvas.width = image.canvas.width;
       canvas.height = image.canvas.height;
+      canvas.style.zoom = `${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1}`;
       console.log('Drawing image on canvas');
       context.drawImage(image.canvas, 0, 0);
     } else { // Is a user uploaded image
@@ -80,7 +90,15 @@ class Photo extends React.Component {
       // canvas.width = '320px';
       // canvas.height = '640px';
       // debugger;
+      console.log('Drawing uploaded photo on canvas');
+
+      // const hiddenCanvas = this.hiddenCanvasRef.current;
+      // const hiddenContext = hiddenCanvas.getContext('2d');
+      // hiddenContext.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
       const { img } = image;
+
+        canvas.width = img.width;
+        canvas.height = img.height;
 
       // const hRatio = img.width / window.innerWidth;
       // const vRatio = img.height / window.innerHeight;
@@ -88,13 +106,46 @@ class Photo extends React.Component {
       const vRatio = window.innerHeight / img.height;
       const ratio = Math.min(hRatio, vRatio);
       // debugger;
-      canvas.width = img.width * hRatio;
-      canvas.height = img.height * vRatio;
 
       // canvas.height = img.height;
       // canvas.width = img.width;
       // context.drawImage(img, 0, 0, img.width, img.height);
-      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+
+      // hiddenCanvas.width = img.width;
+      // hiddenCanvas.height = img.height;
+
+        debugger;
+
+      // hiddenContext.drawImage(img, 0, 0);
+      // context.drawImage(img, 0, 0);
+      context.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
+      // hiddenContext.drawImage(img, 0, 0, img.width, img.height);
+
+
+      // debugger;
+      // context.drawImage(context.getImageData(0, 0, context.canvas.width, context.canvas.height), 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+      // context.drawImage(hiddenCanvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+        const currentCanvas = this.canvasRef.current;
+        currentCanvas.width = img.width * ratio;
+        currentCanvas.height = img.height * ratio;
+        const currentContext = this.canvasRef.current.getContext('2d');
+        // currentContext.drawImage(canvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+        // currentContext.drawImage(context.canvas, 0, 0, img.width, img.height);
+        currentContext.drawImage(context.canvas, 0, 0, context.canvas.width, context.canvas.height, 0, 0, img.width * ratio, img.height * ratio);
+        // currentContext.drawImage(context.canvas, 0, 0);
+
+//       setTimeout(() => {
+//         debugger;
+//         // canvas.width = img.width * hRatio;
+//         // canvas.height = img.height * vRatio;
+//         const hiddenCanvas = document.getElementById('hidden-canvas');
+//         // canvas.width = img.width * hRatio;
+//         // canvas.height = img.height * vRatio;
+//         // context.drawImage(context.getImageData(0, 0, context.canvas.width, context.canvas.height), 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+//         context.drawImage(hiddenCanvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+//         // context.drawImage(hiddenCanvas, 0, 0, img.width, img.height);
+//       }, 1000);
+
     }
   }
 
@@ -103,11 +154,11 @@ class Photo extends React.Component {
     const { faceData } = this.props;
 
     for (const face of faceData) {
-      this.drawEmoji(face);
-
       if (isDebugMode()) {
         this.drawFaceRectangleBoxes(face);
         window.requestAnimationFrame(() => this.drawFaceMidpoint(face));
+      } else {
+        this.drawEmoji(face);
       }
     }
   }
@@ -184,6 +235,7 @@ class Photo extends React.Component {
   }
 
   canvasRef = React.createRef()
+  hiddenCanvasRef = React.createRef()
 
   render() {
     const { faceData } = this.props;
@@ -192,6 +244,8 @@ class Photo extends React.Component {
       <div>
         <Canvas innerRef={this.canvasRef} />
         {faceData instanceof Error && <section>{faceData.toString()}</section>}
+        {/* <HiddenCanvas id="hidden-canvas" innerRef={this.hiddenCanvasRef} style={{ width: '100vw', height: '100vh' }} /> */}
+        <canvas id="hidden-canvas" ref={this.hiddenCanvasRef} style={{ width: '100vw', height: '100vh', display: 'none' }} />
       </div>
     );
   }
