@@ -20,7 +20,6 @@ const Canvas = styled.canvas`
       transform: translateY(-50%);
       max-width: 100%;
     }
-
 `;
 
 
@@ -68,7 +67,7 @@ class Photo extends React.Component {
   drawCanvas() {
     const { image, faceData, faceDataStatus } = this.props;
     this.drawImageToCanvas(image);
-    debugger;
+    // debugger;
 
     switch (faceDataStatus) {
       case 'SUCCESS':

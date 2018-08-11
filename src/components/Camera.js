@@ -49,10 +49,16 @@ class Camera extends Component {
     const camera = this.cameraWrapperRef.current;
     const { clientWidth, clientHeight } = camera;
     console.log('Client width, client height:', clientWidth, clientHeight);
+    // debugger;
+    const isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1); // /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+        // video: { width: { min: 640 }, height: { min: 480} },
         // video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+        video: (!isSafari ?
+          ({ width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } })
+            :
+          ({ width: { min: 640 }, height: { min: 480} })),
         audio: false,
       });
       video.srcObject = stream;
