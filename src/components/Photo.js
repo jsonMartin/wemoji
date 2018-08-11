@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 const Canvas = styled.canvas`
-  width: 100vw;
-  height: 100vh;
+  // width: 100vw;
+  // height: 100vh;
   max-height: 720px;
   z-index: 3;
+  max-width: 100%;
 `;
 
 
@@ -47,7 +48,8 @@ class Photo extends React.Component {
   }
 
   get canvas() {
-    return this.props.image.canvas ? this.canvasRef.current : this.hiddenCanvasRef.current;
+    // return this.props.image.canvas ? this.canvasRef.current : this.hiddenCanvasRef.current;
+    return this.canvasRef.current;
   }
 
   drawCanvas() {
@@ -99,6 +101,8 @@ class Photo extends React.Component {
 
         canvas.width = img.width;
         canvas.height = img.height;
+        canvas.style.width = '';
+        canvas.style.height = '';
 
       // const hRatio = img.width / window.innerWidth;
       // const vRatio = img.height / window.innerHeight;
@@ -115,16 +119,16 @@ class Photo extends React.Component {
       // hiddenCanvas.height = img.height;
 
         debugger;
-
-      // hiddenContext.drawImage(img, 0, 0);
-      // context.drawImage(img, 0, 0);
-      context.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
+      context.drawImage(img, 0, 0);
+      // context.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
       // hiddenContext.drawImage(img, 0, 0, img.width, img.height);
-
 
       // debugger;
       // context.drawImage(context.getImageData(0, 0, context.canvas.width, context.canvas.height), 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
       // context.drawImage(hiddenCanvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
+
+
+        /*
         const currentCanvas = this.canvasRef.current;
         currentCanvas.width = img.width * ratio;
         currentCanvas.height = img.height * ratio;
@@ -132,20 +136,7 @@ class Photo extends React.Component {
         // currentContext.drawImage(canvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
         // currentContext.drawImage(context.canvas, 0, 0, img.width, img.height);
         currentContext.drawImage(context.canvas, 0, 0, context.canvas.width, context.canvas.height, 0, 0, img.width * ratio, img.height * ratio);
-        // currentContext.drawImage(context.canvas, 0, 0);
-
-//       setTimeout(() => {
-//         debugger;
-//         // canvas.width = img.width * hRatio;
-//         // canvas.height = img.height * vRatio;
-//         const hiddenCanvas = document.getElementById('hidden-canvas');
-//         // canvas.width = img.width * hRatio;
-//         // canvas.height = img.height * vRatio;
-//         // context.drawImage(context.getImageData(0, 0, context.canvas.width, context.canvas.height), 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
-//         context.drawImage(hiddenCanvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
-//         // context.drawImage(hiddenCanvas, 0, 0, img.width, img.height);
-//       }, 1000);
-
+        */
     }
   }
 
