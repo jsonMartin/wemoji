@@ -68,6 +68,7 @@ class Photo extends React.Component {
   drawCanvas() {
     const { image, faceData, faceDataStatus } = this.props;
     this.drawImageToCanvas(image);
+    debugger;
 
     switch (faceDataStatus) {
       case 'SUCCESS':
