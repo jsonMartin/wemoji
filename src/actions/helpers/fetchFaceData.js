@@ -48,6 +48,7 @@ export default async (image) => {
         'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
       },
       body: makeblob(image.base64),
+      // body: image.base64 ? makeblob(image.base64) : image.img,
     });
 
     const faceData = await result.json();

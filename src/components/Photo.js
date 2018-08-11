@@ -63,16 +63,25 @@ class Photo extends React.Component {
     }
   }
 
-
-  drawImageToCanvas() {
+  async drawImageToCanvas() {
     const { image } = this.props;
     const canvas = this.canvasRef.current;
-    canvas.width = image.canvas.width;
-    canvas.height = image.canvas.height;
     const context = this.canvasContext;
     context.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
-    console.log('Drawing image on canvas');
-    context.drawImage(image.canvas, 0, 0);
+
+    if (image.canvas) {
+      canvas.width = image.canvas.width;
+      canvas.height = image.canvas.height;
+      console.log('Drawing image on canvas');
+      context.drawImage(image.canvas, 0, 0);
+    } else { // Is a user uploaded image
+      canvas.width = 320;
+      canvas.height = 640;
+      // canvas.width = '320px';
+      // canvas.height = '640px';
+      debugger;
+      context.drawImage(image.img, 0, 0);
+    }
   }
 
   drawFaceData() {

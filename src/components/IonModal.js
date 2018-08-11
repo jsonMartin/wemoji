@@ -18,10 +18,6 @@ const ModalContent = styled.div`
     ion-toolbar > ion-fab-button {
         --ion-color-base: rgba(0,0,0,.2);
     }
-
-    ion-fab {
-      --ion-color-primary: #4387FF;
-    }
 `;
 
 const Logo = styled.img`
