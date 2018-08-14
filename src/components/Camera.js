@@ -60,18 +60,35 @@ class Camera extends Component {
     // debugger;
     const isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1); // /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        // video: { width: { min: 640 }, height: { min: 480} },
-        video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
-        // video: (!isSafari ?
-        //   ({ width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } })
-        //     :
-        //   ({ width: { min: 640 }, height: { min: 480} })),
-        audio: false,
-      });
-      video.srcObject = stream;
-    } catch (error) {
-      console.error(error);
+      try {
+       const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
+          audio: false,
+        });
+        video.srcObject = stream;
+        console.log(stream);
+      } catch (error) {
+        // debugger;
+        console.error(error);
+        throw new Error('Custom size not supported');
+      }
+    } catch(e) {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          // video: { width: { exact: 640 } , height: { exact: 480 } },
+          video: { width: { min: 640, max: 1280 }, height: { min: 480, max: 720 } },
+          audio: false,
+        });
+        video.srcObject = stream;
+
+        video.onloadedmetadata = function() {
+          console.log('width is', this.videoWidth);
+          console.log('height is', this.videoHeight);
+
+          // Adjust mobile offset so image is centered
+          video.style.marginLeft = `${- ((this.videoWidth / 2) - (window.innerWidth / 2))}px`;
+        }
+
+        console.log(stream);
     }
   }
 
