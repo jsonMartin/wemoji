@@ -27,11 +27,6 @@ const Logo = styled.img`
 `;
 
 class IonModal extends Component {
-  constructor() {
-    super();
-    this.lala = 2;
-  }
-
   async componentDidMount() {
     const modalController = this.modalControllerRef.current;
     await modalController.componentOnReady();
@@ -40,14 +35,8 @@ class IonModal extends Component {
 
 
   componentDidUpdate(prevProps) {
-    // debugger;
-    if (prevProps.showModal !== this.props.showModal) {
-      if (this.props.showModal) {
-        console.log('PRESENTING MODAL!');
-        this.presentModal();
-      } else {
-        console.log('Not presenting modal');
-      }
+    if (prevProps.showModal !== this.props.showModal && this.props.showModal) {
+      this.presentModal();
     }
   }
   get shouldShow() {
@@ -64,7 +53,6 @@ class IonModal extends Component {
   modalRef = React.createRef();
 
   dismiss = () => {
-    debugger;
     this.modalController.dismiss();
     setTimeout(this.props.dismissModal, ANIMATION_DELAY);
   }
