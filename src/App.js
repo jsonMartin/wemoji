@@ -32,7 +32,7 @@ const Logo = styled.img`
 `;
 
 async function presentAlert() {
-  const alertController = document.querySelector('ion-alert-controller');
+  const alertController = document.querySelector('ion-alert-controller'); // TODO: Convert this to be ref based, instead of accessing DOM
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
@@ -108,10 +108,4 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { image, showModal } = state;
-
-  return { image, showModal };
-}
-
-export default connect(mapStateToProps, { cameraButtonPressed })(App);
+export default connect((({image, showModal}) => ({image, showModal})), { cameraButtonPressed })(App);

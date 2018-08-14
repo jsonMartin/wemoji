@@ -1,4 +1,4 @@
-import fetchFaceData from './helpers/fetchFaceData.js';
+import fetchFaceData from '../helpers/fetchFaceData.js';
 
 export default (image) => async dispatch => {
   dispatch({ type: 'CAMERA_BUTTON_PRESSED', payload: image});
