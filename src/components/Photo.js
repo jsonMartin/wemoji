@@ -64,7 +64,6 @@ class Photo extends React.Component {
   drawCanvas() {
     const { image, faceData, faceDataStatus } = this.props;
     this.drawImageToCanvas(image);
-    // debugger;
 
     switch (faceDataStatus) {
       case 'SUCCESS':
@@ -90,53 +89,28 @@ class Photo extends React.Component {
     const context = this.canvasContext;
     context.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
 
-    console.log("VideoOffset:", videoOffset);
-
-    if (image.canvas) {
+    if (image.canvas) { // This is a photo taken with the webcam
       canvas.width = image.canvas.width;
       canvas.height = image.canvas.height;
       canvas.style.zoom = `${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1}`;
-      console.log('Drawing image on canvas');
       context.drawImage(image.canvas, 0, 0);
 
-      // Adjust offset for phones
-      if (videoOffset) {
+      if (videoOffset) { // Adjust offset for phones
         canvas.style.marginLeft = videoOffset;
       }
-    } else { // Is a user uploaded image
-      console.log('Drawing uploaded photo on canvas');
+    } else { // This is a user uploaded image
       const { img } = image;
-
-        canvas.width = img.width;
-        canvas.height = img.height;
+      canvas.width = img.width;
+      canvas.height = img.height;
 
       const hRatio = window.innerWidth / img.width;
       const vRatio = window.innerHeight / img.height;
       const ratio = Math.min(hRatio, vRatio);
-        // debugger;
       context.drawImage(img, 0, 0);
-      // context.drawImage(img, 0, 0, img.width * ratio, img.height * ratio);
-      // hiddenContext.drawImage(img, 0, 0, img.width, img.height);
-
-      // debugger;
-      // context.drawImage(context.getImageData(0, 0, context.canvas.width, context.canvas.height), 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
-      // context.drawImage(hiddenCanvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
-
-
-        /*
-        const currentCanvas = this.canvasRef.current;
-        currentCanvas.width = img.width * ratio;
-        currentCanvas.height = img.height * ratio;
-        const currentContext = this.canvasRef.current.getContext('2d');
-        // currentContext.drawImage(canvas, 0, 0, img.width, img.height, 0, 0, img.width * hRatio, img.height * hRatio);
-        // currentContext.drawImage(context.canvas, 0, 0, img.width, img.height);
-        currentContext.drawImage(context.canvas, 0, 0, context.canvas.width, context.canvas.height, 0, 0, img.width * ratio, img.height * ratio);
-        */
     }
   }
 
   drawFaceData() {
-    console.log('Drawing face data on canvas');
     const { faceData } = this.props;
 
     for (const face of faceData) {
@@ -160,7 +134,6 @@ class Photo extends React.Component {
     context.fillStyle = style.fillStyle;
     context.textAlign = style.textAlign;
     context.fillText(text, x, y);
-    // context.fillText(text, x, y, maxWidth);
   }
 
   drawEmoji({ faceRectangle, faceAttributes }) {
@@ -168,30 +141,18 @@ class Photo extends React.Component {
       top, left, width, height,
     } = faceRectangle;
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
-    console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     const emotion = emotionRanking[0][0];
-    // const [midX, midY] = [left + (width / 2), top + (height / 2)];
-    // const [x, y] = [left, (top * 0.9) + height];
     const [x, y] = [left, top + height];
+    const [adjustedX, adjustedWidth] = [x * 0.75, width * 1.25];
 
-    const adjustedX = x * 0.75;
-    const adjustedWidth = width * 1.25;
-
-    const fontSize = adjustedWidth;
     const style = {
-      font: `${fontSize}px Comic Sans MS`,
+      font: `${adjustedWidth}px Comic Sans MS`,
       fillStyle: 'yellow',
       textAlign: 'left',
     };
 
-
-    console.log('fontSizer:', fontSize); // const [x, y] = [(faceRectangle.left + faceRectangle.width) / 2, (faceRectangle.top + faceRectangle.height) / 2];
-    // const [x, y] = [left, top + fontSize];
-    // const [x, y] = [left, top];
-
-
+    console.log('Emotion rankings:', JSON.stringify(emotionRanking));
     this.drawText(EMOJI_EMOTION_MAP[emotion], style, x - ((adjustedWidth - width) / 2), y, adjustedWidth);
-    // this.drawText(EMOJI_EMOTION_MAP[emotion], style, x, y, width);
   }
 
   drawFaceMidpoint({ faceRectangle }) {
@@ -201,8 +162,6 @@ class Photo extends React.Component {
     } = faceRectangle;
 
     const [midX, midY] = [left + (width / 2), top + (height / 2)];
-    console.log(`Top: ${top}, left: ${left}, width: ${width}, height: ${height}`);
-    console.log(`midX: ${midX}, midY: ${midY}`);
     context.lineWidth = '10';
     context.strokeStyle = 'red';
     context.arc(midX, midY, 10, 0, 2 * Math.PI);
@@ -230,13 +189,10 @@ class Photo extends React.Component {
       <PhotoWrapper className={ !this.props.image.canvas ? 'uploaded' : '' } >
         <Canvas innerRef={this.canvasRef} className={ !this.props.image.canvas ? 'uploaded' : '' } />
         {faceData instanceof Error && <section>{faceData.toString()}</section>}
-        {/* <HiddenCanvas id="hidden-canvas" innerRef={this.hiddenCanvasRef} style={{ width: '100vw', height: '100vh' }} /> */}
         <canvas id="hidden-canvas" ref={this.hiddenCanvasRef}  style={{ width: '100vw', height: '100vh', display: 'none' }} />
       </PhotoWrapper>
     );
   }
-
-  // TODO: Allow to save image
 }
 
 export default connect(({ image, faceData, faceDataStatus, videoOffset }) => ({ image, faceData, faceDataStatus, videoOffset }), null)(Photo);

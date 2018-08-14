@@ -68,7 +68,7 @@ class Camera extends Component {
         });
         video.srcObject = stream;
 
-        video.onloadedmetadata = function() {
+        video.onloadedmetadata = function() { // This needs to be a regular function (not arrow) so that "this" refers to the video object
           // Adjust mobile offset so image is centered
           const marginLeftOffset = `${- ((this.videoWidth / 2) - (window.innerWidth / 2))}px`;
           video.style.marginLeft = marginLeftOffset;
