@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import cameraButtonPressed from '../actions/cameraButtonPressed.js';
+import setVideoOffset from '../actions/setVideoOffset.js';
 
 const EMOJI_YELLOW = '#FDDB5B'; // De-dupcliate and fix by putting in a themes file?
 
@@ -53,6 +54,7 @@ class Camera extends Component {
   cameraWrapperRef = React.createRef()
 
   async loadMediaStream() {
+    const { setVideoOffset } = this.props;
     const video = this.videoRef.current;
     const camera = this.cameraWrapperRef.current;
     const { clientWidth, clientHeight } = camera;
@@ -85,7 +87,10 @@ class Camera extends Component {
           console.log('height is', this.videoHeight);
 
           // Adjust mobile offset so image is centered
-          video.style.marginLeft = `${- ((this.videoWidth / 2) - (window.innerWidth / 2))}px`;
+          const marginLeftOffset = `${- ((this.videoWidth / 2) - (window.innerWidth / 2))}px`;
+          video.style.marginLeft = marginLeftOffset;
+          // debugger;
+          setVideoOffset(marginLeftOffset);
         }
 
         console.log(stream);
@@ -126,4 +131,4 @@ class Camera extends Component {
   }
 }
 
-export default connect(null, { cameraButtonPressed })(Camera);
+export default connect(null, { setVideoOffset, cameraButtonPressed })(Camera);

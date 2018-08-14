@@ -96,10 +96,12 @@ class Photo extends React.Component {
   }
 
   async drawImageToCanvas() {
-    const { image } = this.props;
+    const { image, videoOffset } = this.props;
     const canvas = this.canvasRef.current;
     const context = this.canvasContext;
     context.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
+
+    console.log("VideoOffset:", videoOffset);
 
     if (image.canvas) {
       canvas.width = image.canvas.width;
@@ -107,6 +109,11 @@ class Photo extends React.Component {
       canvas.style.zoom = `${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1}`;
       console.log('Drawing image on canvas');
       context.drawImage(image.canvas, 0, 0);
+
+      // Adjust offset for phones
+      if (videoOffset) {
+        canvas.style.marginLeft = videoOffset;
+      }
     } else { // Is a user uploaded image
       console.log('Drawing uploaded photo on canvas');
       const { img } = image;
@@ -243,4 +250,4 @@ class Photo extends React.Component {
   // TODO: Allow to save image
 }
 
-export default connect(({ image, faceData, faceDataStatus }) => ({ image, faceData, faceDataStatus }), null)(Photo);
+export default connect(({ image, faceData, faceDataStatus, videoOffset }) => ({ image, faceData, faceDataStatus, videoOffset }), null)(Photo);
