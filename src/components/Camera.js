@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import cameraButtonPressed from '../actions/cameraButtonPressed.js';
 import setVideoOffset from '../actions/setVideoOffset.js';
 
-const EMOJI_YELLOW = '#FDDB5B'; // De-dupcliate and fix by putting in a themes file?
-
 const Video = styled.video`
   zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
   overflow: hidden;
@@ -23,7 +21,7 @@ const HiddenCanvas = styled.canvas`
 
 const CameraButton = styled.button`
   border-radius: 50%;
-  background-color: ${EMOJI_YELLOW};
+  background-color: #FDDB5B;
   font-size: 36px;
   text-align: center;
   position: relative;
@@ -56,7 +54,6 @@ class Camera extends Component {
           audio: false,
         });
         video.srcObject = stream;
-        console.log(stream);
       } catch (error) {
         console.error(error);
         throw new Error('Custom size not supported...trying standard sizes');
@@ -66,6 +63,7 @@ class Camera extends Component {
           video: { width: { min: 640, max: 1280 }, height: { min: 480, max: 720 } },
           audio: false,
         });
+
         video.srcObject = stream;
 
         video.onloadedmetadata = function() { // This needs to be a regular function (not arrow) so that "this" refers to the video object
@@ -74,8 +72,6 @@ class Camera extends Component {
           video.style.marginLeft = marginLeftOffset;
           setVideoOffset(marginLeftOffset);
         }
-
-        console.log(stream);
     }
   }
 
@@ -87,7 +83,6 @@ class Camera extends Component {
     [canvas.width, canvas.height] = [videoWidth, videoHeight];
 
     context.imageSmoothingEnabled = false; // Anti-Aliasing messes up image render drawing
-    console.log('VideoWidth, VideoHeight:', videoWidth, videoHeight);
 
     context.drawImage(video, 0, 0);
     const imageData = canvas.toDataURL('image/png');

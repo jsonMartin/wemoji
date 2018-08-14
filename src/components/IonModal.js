@@ -113,18 +113,4 @@ class IonModal extends Component {
   }
 }
 
-// export default IonModal;
-
-function mapStateToProps(state) {
-  const { image, showModal, mode } = state;
-
-  return { image, showModal, mode };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    dismissModal: () => ({ type: 'DISMISS_MODAL' }),
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(IonModal);
+export default connect(({  image, showModal, mode } ) => ({ image, showModal, mode }), { dismissModal: () => ({ type: 'DISMISS_MODAL' })})(IonModal);
