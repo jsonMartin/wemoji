@@ -7,14 +7,6 @@ import dismissModal from '../actions/dismissModal.js';
 
 const ANIMATION_DELAY = 300; // in ms
 
-const backButton = styled('ion-fab')`
-    background-color: pink;
-`;
-
-const ShareButtons = styled('ion-fab')`
-  --ion-color-primary: pink;
-`;
-
 const ModalContent = styled.div`
     ion-toolbar > ion-fab-button {
         --ion-color-base: rgba(0,0,0,.2);
@@ -47,7 +39,7 @@ class IonModal extends Component {
     const modalElement = await this.modalController.create({ component: this.modalRef.current });
     modalElement.present();
   }
-    modalController = null;
+  modalController = null;
 
   modalControllerRef = React.createRef();
   modalRef = React.createRef();

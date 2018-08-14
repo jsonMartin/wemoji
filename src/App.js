@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Camera from './components/Camera.js';
 import IonModal from './components/IonModal.js';
-import Modal from './components/Modal.js';
 import Photo from './components/Photo.js';
 
 import cameraButtonPressed from './actions/cameraButtonPressed.js';
