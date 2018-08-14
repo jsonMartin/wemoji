@@ -97,7 +97,7 @@ class App extends Component {
         <Wrapper className="App">
 
           <ion-header style={{ position: 'absolute', height: 0, backgroundColor: 'rgba(0,0,0,0)' }}>
-            <ion-toolbar>
+            <ion-toolbar mode="ios">
               <ion-buttons slot="end">
                 <ion-button slot="start" onClick={() => this.selectImage()}>
                   <ion-icon name="images" />

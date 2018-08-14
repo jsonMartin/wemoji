@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Photo from './Photo.js';
 import styled from 'styled-components';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import dismissModal from '../actions/dismissModal.js';
 
 const ANIMATION_DELAY = 300; // in ms
 
@@ -63,13 +64,14 @@ class IonModal extends Component {
   modalRef = React.createRef();
 
   dismiss = () => {
+    debugger;
     this.modalController.dismiss();
     setTimeout(this.props.dismissModal, ANIMATION_DELAY);
   }
 
   renderHeader() {
     return (
-      <ion-toolbar style={{ position: 'absolute' }}>
+      <ion-toolbar style={{ position: 'absolute' }} mode="ios">
         <ion-fab-button>
           <ion-icon name="close" color="primary" onClick={this.dismiss} />
         </ion-fab-button>
@@ -113,4 +115,4 @@ class IonModal extends Component {
   }
 }
 
-export default connect(({  image, showModal, mode } ) => ({ image, showModal, mode }), { dismissModal: () => ({ type: 'DISMISS_MODAL' })})(IonModal);
+export default connect((({  image, showModal, mode } ) => ({ image, showModal, mode })), { dismissModal })(IonModal);
