@@ -19,17 +19,6 @@ const HiddenCanvas = styled.canvas`
   display: none;
 `;
 
-const CameraButton = styled.button`
-  border-radius: 50%;
-  background-color: #FDDB5B;
-  font-size: 36px;
-  text-align: center;
-  position: relative;
-  display: block;
-  margin: 0 auto;
-  bottom: 70px;
-`;
-
 class Camera extends Component {
   async componentDidMount() {
     window.addEventListener('resize', () => this.loadMediaStream()); // Re-render if user resizes browser
@@ -44,7 +33,6 @@ class Camera extends Component {
     const { setVideoOffset } = this.props;
     const video = this.videoRef.current;
     const camera = this.cameraWrapperRef.current;
-    const { clientWidth, clientHeight } = camera;
 
     try {
       // First, we try to allow the camera to work at exactly the resolution of the browser.

@@ -22,14 +22,6 @@ const Canvas = styled.canvas`
   }
 `;
 
-const HiddenCanvas = styled.canvas`
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
-  z-index: 2;
-`;
-
 const EMOJI_EMOTION_MAP = {
   anger: '😡',
   contempt: '🤨',
@@ -61,7 +53,7 @@ class Photo extends React.Component {
   }
 
   drawCanvas() {
-    const { image, faceData, faceDataStatus } = this.props;
+    const { image, faceDataStatus } = this.props;
     this.drawImageToCanvas(image);
 
     switch (faceDataStatus) {
@@ -101,10 +93,6 @@ class Photo extends React.Component {
       const { img } = image;
       canvas.width = img.width;
       canvas.height = img.height;
-
-      const hRatio = window.innerWidth / img.width;
-      const vRatio = window.innerHeight / img.height;
-      const ratio = Math.min(hRatio, vRatio);
       context.drawImage(img, 0, 0);
     }
   }
@@ -142,7 +130,7 @@ class Photo extends React.Component {
     const emotionRanking = Object.entries(faceAttributes.emotion).sort((a, b) => a[1] < b[1]);
     const emotion = emotionRanking[0][0];
     const [x, y] = [left, top + height];
-    const [adjustedX, adjustedWidth] = [x * 0.75, width * 1.25];
+    const adjustedWidth = width * 1.25;
 
     const style = {
       font: `${adjustedWidth}px Comic Sans MS`,

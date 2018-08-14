@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 
 import Camera from './components/Camera.js';
 import IonModal from './components/IonModal.js';
-import Photo from './components/Photo.js';
 
 import cameraButtonPressed from './actions/cameraButtonPressed.js';
-
-const EMOJI_YELLOW = '#FDDB5B';
 
 const Section = styled.section`
   width: 100vw;
@@ -75,8 +72,6 @@ class App extends Component {
   }
 
   render() {
-    const { image, showModal } = this.props;
-
     return (
       <ion-app style={{ overflow: 'hidden' }}>
         <Wrapper className="App">
