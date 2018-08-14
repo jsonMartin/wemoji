@@ -10,22 +10,11 @@ const EMOJI_YELLOW = '#FDDB5B'; // De-dupcliate and fix by putting in a themes f
 const Video = styled.video`
   zoom: ${window.innerHeight > 720 ? 2.02 - (720 / window.innerHeight) : 1};
   overflow: hidden;
-
-  /* Only enable this for iPHONE MODE! */
-  /*
-   position: relative;
-   top: 50%;
-   transform: translateY(-50%);
-   max-width: 100%;
-   */
 `;
 
 const CameraWrapper = styled.div`
-  /* height: 80vh; */
-  /* max-height: 720px; */
   height: 100%;
   width: 100%;
-  /* background-color: green; */
 `;
 
 const HiddenCanvas = styled.canvas`

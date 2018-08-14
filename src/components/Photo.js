@@ -3,24 +3,14 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 const PhotoWrapper = styled.div`
-    background-color: brown; // TODO: Change this
+    background-color: brown;
     height: 100vh;
 `;
 
 const Canvas = styled.canvas`
-  // width: 100vw;
-  // height: 100vh;
   max-height: 720px;
   z-index: 3;
   max-width: none;
-
-  /* ONLY APPLY THIS ON iPHONE! */
-  /*
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 100%;
-  */
 
     &.uploaded {
     position: relative;
@@ -29,7 +19,6 @@ const Canvas = styled.canvas`
     max-width: 100%;
   }
 `;
-
 
 const HiddenCanvas = styled.canvas`
   position: absolute;
