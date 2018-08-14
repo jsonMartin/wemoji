@@ -47,10 +47,9 @@ class Camera extends Component {
     const video = this.videoRef.current;
     const camera = this.cameraWrapperRef.current;
     const { clientWidth, clientHeight } = camera;
-    console.log('Client width, client height:', clientWidth, clientHeight);
-    // debugger;
-    const isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1); // /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
     try {
+      // First, we try to allow the camera to work at exactly the resolution of the browser.
       try {
        const stream = await navigator.mediaDevices.getUserMedia({
           video: { width: { ideal: camera.clientWidth, max: 1280 }, height: { ideal: camera.clientHeight, max: 720 } },
@@ -59,26 +58,20 @@ class Camera extends Component {
         video.srcObject = stream;
         console.log(stream);
       } catch (error) {
-        // debugger;
         console.error(error);
-        throw new Error('Custom size not supported');
+        throw new Error('Custom size not supported...trying standard sizes');
       }
-    } catch(e) {
+    } catch(e) { // If that fails, we try a standard size to allow better compatability with devices such as iPhone
         const stream = await navigator.mediaDevices.getUserMedia({
-          // video: { width: { exact: 640 } , height: { exact: 480 } },
           video: { width: { min: 640, max: 1280 }, height: { min: 480, max: 720 } },
           audio: false,
         });
         video.srcObject = stream;
 
         video.onloadedmetadata = function() {
-          console.log('width is', this.videoWidth);
-          console.log('height is', this.videoHeight);
-
           // Adjust mobile offset so image is centered
           const marginLeftOffset = `${- ((this.videoWidth / 2) - (window.innerWidth / 2))}px`;
           video.style.marginLeft = marginLeftOffset;
-          // debugger;
           setVideoOffset(marginLeftOffset);
         }
 
