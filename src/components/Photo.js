@@ -57,7 +57,6 @@ class Photo extends React.Component {
   }
 
   get canvas() {
-    // return this.props.image.canvas ? this.canvasRef.current : this.hiddenCanvasRef.current;
     return this.canvasRef.current;
   }
 
@@ -151,7 +150,7 @@ class Photo extends React.Component {
       textAlign: 'left',
     };
 
-    console.log('Emotion rankings:', JSON.stringify(emotionRanking));
+    console.log('Emotion rankings:', JSON.stringify(emotionRanking)); // Logs the order of the most likely emotions, starting with most likely
     this.drawText(EMOJI_EMOTION_MAP[emotion], style, x - ((adjustedWidth - width) / 2), y, adjustedWidth);
   }
 

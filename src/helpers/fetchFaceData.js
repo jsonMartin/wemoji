@@ -1,7 +1,7 @@
 import param from 'jquery-param';
 
-const SUBSCRIPTION_KEY = 'e29dde98533040dabe35258562bbb030';
-const URI_BASE = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect';
+const SUBSCRIPTION_KEY = 'e29dde98533040dabe35258562bbb030'; // This is a Free API key from Microsoft's Face API. It only lasts for 30 days, so replace this after it expires with a new key.
+const URI_BASE = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect'; // Microsoft Face API endpoint to use, taken from the Azure portal
 
 const makeblob = (dataURL) => {
   const BASE64_MARKER = ';base64,';
@@ -48,7 +48,6 @@ export default async (image) => {
         'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
       },
       body: makeblob(image.base64),
-      // body: image.base64 ? makeblob(image.base64) : image.img,
     });
 
     const faceData = await result.json();

@@ -32,7 +32,7 @@ const CameraButton = styled.button`
 
 class Camera extends Component {
   async componentDidMount() {
-    window.addEventListener('resize', () => this.loadMediaStream());
+    window.addEventListener('resize', () => this.loadMediaStream()); // Re-render if user resizes browser
     this.loadMediaStream();
   }
 

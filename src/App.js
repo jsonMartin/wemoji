@@ -11,10 +11,8 @@ import cameraButtonPressed from './actions/cameraButtonPressed.js';
 const EMOJI_YELLOW = '#FDDB5B';
 
 const Section = styled.section`
-  /* height: calc(100vh); */
   width: 100vw;
   height: 100vh;
-  /* height: calc(100vh - 100px); */
   background-color: green;
 `;
 
@@ -48,31 +46,22 @@ async function presentAlert() {
 }
 
 class App extends Component {
-  constructor() {
-    super();
-    console.log('hi');
-  }
-
   hiddenFileInputRef = React.createRef()
 
   selectImage = () => {
-    // debugger;
     this.hiddenFileInputRef.current.click();
   }
 
   uploadImage = async () => {
-    // debugger;
-
-    const image = this.hiddenFileInputRef.current.files[0];
-    function getBase64(file) {
+    const getBase64 = function (file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
       });
-    }
-
+    };
+    const image = this.hiddenFileInputRef.current.files[0];
     const base64 = await getBase64(image);
 
     // Convert binary data to image object
@@ -80,16 +69,13 @@ class App extends Component {
     img.src = base64;
     img.onload = () => {
       const [width, height] = [this.width, this.height];
-      this.props.cameraButtonPressed({
-        base64, img, width, height,
-      });
+      this.props.cameraButtonPressed({ base64, img, width, height });
       this.hiddenFileInputRef.current.value = '';
     };
   }
 
   render() {
     const { image, showModal } = this.props;
-    // debugger;
 
     return (
       <ion-app style={{ overflow: 'hidden' }}>
@@ -107,16 +93,16 @@ class App extends Component {
           </ion-header>
 
           <ion-content fullscreen scroll-enabled={false} style={{ width: '100vw', height: '100vh' }}>
-            {/* {showModal && <Modal />} */}
-            {/* {showModal && <IonModal />} */}
-            {<IonModal />}
+            <IonModal />
             <Section>
               <Camera />
             </Section>
           </ion-content>
         </Wrapper>
+
         <ion-alert-controller />
         <HiddenFileInput type="file" innerRef={this.hiddenFileInputRef} onChange={() => this.uploadImage()} />
+
       </ion-app>
     );
   }
