@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import isDebugMode from '../helpers/isDebugMode.js';
+
 const PhotoWrapper = styled.div`
     background-color: brown;
     height: 100vh;
@@ -38,8 +40,6 @@ const EMOJI_EMOTION_MAP = {
   sadness: '😥',
   surprise: '😮',
 };
-
-const isDebugMode = () => /debug=true/g.test(window.location.href);
 
 class Photo extends React.Component {
   state = {}

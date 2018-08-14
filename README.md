@@ -1,24 +1,8 @@
-Hosting Provider: Netlify
-Test URL: https://wizardly-snyder-db8480.netlify.com/
+# Remaining TODOs:
+[ ] Allow user to download photo to Photo album // Set the href attribute of the download button, like `document.querySelector('#dl-btn').href = imageDataURL`;
+[ ] Show an error icon if user denies permissions (use ErrorBoundary)
 
-
-TODOs
-- Fix on Phone
-- Set maxwidth of desktop app
-- Allow user to download photo
-// Set the href attribute of the download button.
-    document.querySelector('#dl-btn').href = imageDataURL;
-
-- Make tapping on photo take the image
-- Make video camera fill up entire height of div, or center if not possible
-- Clean up code
-- Reactify code as much away from vanilla DOM as possible
-- Process image and send it to back-end
-- Show an error icon if user denies permissions (use ErrorBoundary)
-
-
-EXTRAs
-- Image filters? https://www.html5rocks.com/en/tutorials/getusermedia/intro/
+# EXTRAs (these are all things that could be done to improve the app)
+- Image filters? ( https://www.html5rocks.com/en/tutorials/getusermedia/intro/ )
 - Animations
 - PWA tuning
-- Saving images
