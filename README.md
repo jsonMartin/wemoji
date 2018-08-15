@@ -10,6 +10,7 @@ Wemoji is a Progressive Web App that scans for faces in user uploaded photos and
 - Cross-platform: Works on phones & browsers
 - Works with images taken from user’s camera, or uploaded images
 - Lightweight: 265K payload for entire app _(82.47KB gzipped)_
+- Serverless App: Everything that needs to run this app is contained within the client side bundle. Only back-end used is Microsoft's Face API!
 
 ## Tech Stack
 
