@@ -34,7 +34,7 @@ async function presentAlert() {
 
   const alert = await alertController.create({
     header: 'Wemoji',
-    subHeader: 'Brought to you by POPSUGAR',
+    subHeader: 'Sponsored by POPSUGAR',
     message: 'Developed by Jason Martin, <br/>Designed by Leighton Kountz',
     buttons: ['👍'],
   });
